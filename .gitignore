@@ -1,4 +1,5 @@
 dist/
+deployment/
 node_modules/
 .vercel/
 .env

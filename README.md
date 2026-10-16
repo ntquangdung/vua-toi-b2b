@@ -2,6 +2,8 @@
 
 Trang tĩnh gồm HTML, CSS, JS và assets; chưa triển khai hosting. Tích hợp nhận đơn qua Google Apps Script/Google Sheets đã triển khai và kiểm tra thực tế ngày 16/10/2026. URL Web App được cấu hình trong site-config.js; đơn từ landing page local ghi vào tab DonHang của Sheet do người dùng cung cấp.
 
+Mã nguồn đã được đẩy lên repository Private https://github.com/ntquangdung/vua-toi-b2b, nhánh main. Cấu hình build/hosting và trạng thái triển khai nằm trong DEPLOYMENT.md. Vercel đang chờ nhóm có gói phù hợp; chưa có bản ghi DNS thực tế cho b2b.vuatoi.com.vn.
+
 ## Nguồn thông tin
 
 Thông tin sản phẩm, tên bộ, thành phần, giá và hotline được đọc từ 8 ảnh trong ZIP HỘP QUÀ TẶNG VUA TỎI.zip người dùng cung cấp. Chi tiết đối chiếu nằm trong assets/gift-collection/source-map.json. Theo yêu cầu bổ sung ngày 16/10/2026, mục Về Vua Tỏi sử dụng tên công ty, địa chỉ, email và thông tin giới thiệu từ website chính thức https://vuatoi.com.vn/. Giá và thành phần các bộ quà vẫn theo ảnh ZIP. Các liên kết website, câu chuyện thương hiệu, chính sách và Facebook https://www.facebook.com/vuatoidacsanlyson mở trong tab mới.
