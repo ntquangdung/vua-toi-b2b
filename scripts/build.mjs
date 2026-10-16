@@ -8,7 +8,7 @@ if (dirname(output) !== root || relative(root, output) !== 'dist') {
   throw new Error('Build output must stay inside the project dist folder.');
 }
 const publicFiles = new Set([
-  'index.html', 'styles.css', 'script.js', 'gift-picker.js', 'orders.js', 'site-config.js',
+  'index.html', 'styles.css', 'script.js', 'gift-picker.js', 'orders.js', 'site-config.js', '_headers',
   'assets/fonts/manrope-OFL.txt', 'assets/fonts/redrose-OFL.txt', 'assets/fonts/playfair-OFL.txt',
 ]);
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
