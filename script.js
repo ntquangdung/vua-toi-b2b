@@ -63,9 +63,6 @@
     document.dispatchEvent(new CustomEvent('vua-toi:select-product', {detail:{product}}));
   };
   $$('a[data-product]').forEach(link => link.addEventListener('click', () => selectProduct(link.dataset.product)));
-  $$('a[data-occasion]').forEach(link => link.addEventListener('click', () => {
-    $('#contact-occasion').value = link.dataset.occasion;
-  }));
 
   $$('a[href^="#"]').forEach(link => link.addEventListener('click', () => {
     const target = document.getElementById(link.getAttribute('href').slice(1));

@@ -5,7 +5,7 @@
  */
 const VUA_TOI_HEADERS_ = Object.freeze([
   'Mã đơn', 'Request ID', 'Thời gian nhận', 'Họ và tên', 'Số điện thoại',
-  'Email', 'Các bộ quà', 'Tổng số bộ', 'Dịp tặng', 'Ghi chú', 'Nguồn form', 'Payload SHA-256',
+  'Email', 'Các bộ quà', 'Tổng số bộ', 'Ghi chú', 'Nguồn form', 'Payload SHA-256',
   'Đơn giá từng bộ (VNĐ)', 'Thành tiền từng bộ (VNĐ)', 'Tổng tiền hàng (VNĐ)', 'Loại yêu cầu'
 ]);
 const VUA_TOI_LEGACY_HEADERS_ = Object.freeze([
@@ -70,18 +70,19 @@ function saveOrder(payload, clientOrigin) {
 
     const spreadsheet = SpreadsheetApp.openById(config.spreadsheetId);
     const sheet = ordersSheet_(spreadsheet, config.sheetName);
+    const layout = sheetLayout_(sheet);
     const lastRow = sheet.getLastRow();
     if (lastRow > 1) {
-      const matches = sheet.getRange(2, 2, lastRow - 1, 1)
+      const matches = sheet.getRange(2, layout.columns['Request ID'] + 1, lastRow - 1, 1)
         .createTextFinder(order.requestId)
         .matchEntireCell(true).matchCase(true).useRegularExpression(false).findAll();
       if (matches.length > 1) throw orderError_('DATA_INTEGRITY');
       if (matches.length === 1) {
-        const range = sheet.getRange(matches[0].getRow(), 1, 1, VUA_TOI_HEADERS_.length);
-        const stored = range.getValues()[0];
-        if (String(stored[11]) !== fingerprint) throw orderError_('REQUEST_ID_CONFLICT');
+        const range = sheet.getRange(matches[0].getRow(), 1, 1, layout.width);
+        const stored = canonicalRow_(range.getValues()[0], layout);
+        if (String(stored[10]) !== fingerprint) throw orderError_('REQUEST_ID_CONFLICT');
         SpreadsheetApp.flush();
-        assertStored_(range, order, fingerprint, null);
+        assertStored_(range, layout, order, fingerprint, null);
         return { saved: true, orderId: 'VT-' + order.requestId };
       }
     }
@@ -93,24 +94,28 @@ function saveOrder(payload, clientOrigin) {
     const receivedAt = new Date();
     const consultation = order.kind === 'consultation';
     const pricing = consultation ? {unitPrices:'',lineTotals:'',total:''} : pricingFor_(order.items);
-    const range = sheet.getRange(rowNumber, 1, 1, VUA_TOI_HEADERS_.length);
+    const range = sheet.getRange(rowNumber, 1, 1, layout.width);
     // Text formatting preserves a leading zero in telephone numbers.
     range.setNumberFormat('@');
-    sheet.getRange(rowNumber, 3).setNumberFormat('dd/MM/yyyy HH:mm:ss');
-    sheet.getRange(rowNumber, 8).setNumberFormat('0');
-    sheet.getRange(rowNumber, 15).setNumberFormat('#,##0" ₫"');
-    range.setValues([[
+    sheet.getRange(rowNumber, layout.columns['Thời gian nhận']+1).setNumberFormat('dd/MM/yyyy HH:mm:ss');
+    sheet.getRange(rowNumber, layout.columns['Tổng số bộ']+1).setNumberFormat('0');
+    sheet.getRange(rowNumber, layout.columns['Tổng tiền hàng (VNĐ)']+1).setNumberFormat('#,##0" ₫"');
+    const values = [
       'VT-' + order.requestId, order.requestId, receivedAt,
       sheetText_(order.name), sheetText_(order.phone), sheetText_(order.email),
       sheetText_(formatItems_(order.items)), consultation ? '' : totalQuantity_(order.items),
-      sheetText_(order.occasion), sheetText_(order.notes), sheetText_(order.source), fingerprint,
+      sheetText_(order.notes), sheetText_(order.source), fingerprint,
       sheetText_(pricing.unitPrices), sheetText_(pricing.lineTotals), pricing.total,
       sheetText_(consultation ? 'Tư vấn' : 'Đặt hàng')
-    ]]);
-    sheet.getRange(rowNumber,13,1,2).setWrap(true);
+    ];
+    const physical = Array(layout.width).fill('');
+    VUA_TOI_HEADERS_.forEach((header,index) => { physical[layout.columns[header]] = values[index]; });
+    range.setValues([physical]);
+    ['Đơn giá từng bộ (VNĐ)','Thành tiền từng bộ (VNĐ)'].forEach(header =>
+      sheet.getRange(rowNumber,layout.columns[header]+1).setWrap(true));
     sheet.autoResizeRows(rowNumber,1);
     SpreadsheetApp.flush();
-    assertStored_(range, order, fingerprint, receivedAt, pricing);
+    assertStored_(range, layout, order, fingerprint, receivedAt, pricing);
     return { saved: true, orderId: 'VT-' + order.requestId };
   } catch (error) {
     return failure_(error && error.orderCode ? error.orderCode : 'STORAGE_ERROR');
@@ -169,48 +174,84 @@ function ordersSheet_(spreadsheet, name) {
     sheet.setFrozenRows(1);
     prepared = true;
   } else {
-    const actual = sheet.getRange(1, 1, 1, VUA_TOI_HEADERS_.length).getValues()[0];
-    if (JSON.stringify(actual) !== JSON.stringify(VUA_TOI_HEADERS_)) {
-      const legacyLength = [11,12,15].find(length => sheet.getLastColumn() === length &&
-        JSON.stringify(actual.slice(0,length)) === JSON.stringify(VUA_TOI_LEGACY_HEADERS_.slice(0,length)) &&
-        actual.slice(length).every(value => value === ''));
-      // Also resume safely if a previous run moved Email but stopped before adding P.
-      const moved = sheet.getLastColumn() === 15 &&
-        JSON.stringify(actual.slice(0,15)) === JSON.stringify(VUA_TOI_HEADERS_.slice(0,15)) && actual[15] === '';
-      if (!legacyLength && !moved) throw orderError_('SHEET_HEADERS_MISMATCH');
-      if (legacyLength) {
-        if (legacyLength < 15) {
-          sheet.getRange(1,legacyLength+1,1,15-legacyLength)
-            .setValues([VUA_TOI_LEGACY_HEADERS_.slice(legacyLength)]).setFontWeight('bold');
-        }
-        // Move the entire native column, preserving values, formulas, dates and formatting.
-        sheet.moveColumns(sheet.getRange(1,12,sheet.getMaxRows(),1),6);
-      }
-      sheet.getRange(1,16).setValues([['Loại yêu cầu']]).setFontWeight('bold');
+    const actual = readHeaders_(sheet);
+    const optional = ['Email','Đơn giá từng bộ (VNĐ)','Thành tiền từng bộ (VNĐ)','Tổng tiền hàng (VNĐ)','Loại yêu cầu'];
+    // Validate all core names before making any change. Staff may reorder columns
+    // or add named staff columns; blank, duplicate or missing core names are unsafe.
+    if (VUA_TOI_HEADERS_.filter(header => !optional.includes(header)).some(header => !actual.includes(header))) {
+      throw orderError_('SHEET_HEADERS_MISMATCH');
+    }
+    const missing = optional.filter(header => !actual.includes(header));
+    if (missing.length) {
+      // Only recognized old schemas may gain missing system columns automatically.
+      const legacy = [11,12,15].some(length => actual.length === length &&
+        JSON.stringify(actual) === JSON.stringify(VUA_TOI_LEGACY_HEADERS_.slice(0,length)));
+      const v4WithoutType = actual.length === 15 && actual.includes('Dịp tặng') &&
+        missing.length === 1 && missing[0] === 'Loại yêu cầu';
+      const withoutType = actual.length === 14 &&
+        JSON.stringify(actual) === JSON.stringify(VUA_TOI_HEADERS_.slice(0,14));
+      if (!legacy && !v4WithoutType && !withoutType) throw orderError_('SHEET_HEADERS_MISMATCH');
+      sheet.getRange(1,actual.length+1,1,missing.length).setValues([missing]).setFontWeight('bold');
+      prepared = true;
+    }
+    let headers = readHeaders_(sheet);
+    // The occasion field was removed at the owner's request. Native deletion
+    // preserves every other column's values, formulas, formatting and order.
+    if (headers.includes('Dịp tặng')) {
+      sheet.deleteColumn(headers.indexOf('Dịp tặng')+1);
+      prepared = true;
+      headers = readHeaders_(sheet);
+    }
+    if (headers.indexOf('Email') !== 5) {
+      sheet.moveColumns(sheet.getRange(1,headers.indexOf('Email')+1,sheet.getMaxRows(),1),6);
       prepared = true;
     }
   }
+  const layout = sheetLayout_(sheet);
   if (prepared) {
-    preparePriceColumns_(sheet);
-    sheet.setColumnWidth(6,230);
-    sheet.setColumnWidth(16,140);
+    preparePriceColumns_(sheet,layout);
+    sheet.setColumnWidth(layout.columns.Email+1,230);
+    sheet.setColumnWidth(layout.columns['Loại yêu cầu']+1,140);
   }
   // Keep integrity fields available to the receiver, out of the staff's normal view.
-  sheet.hideColumns(2);
-  sheet.hideColumns(12);
-  backfillPricing_(sheet);
-  backfillRequestTypes_(sheet);
+  sheet.hideColumns(layout.columns['Request ID']+1);
+  sheet.hideColumns(layout.columns['Payload SHA-256']+1);
+  backfillPricing_(sheet,layout);
+  backfillRequestTypes_(sheet,layout);
   return sheet;
+}
+
+function readHeaders_(sheet) {
+  const width = sheet.getLastColumn();
+  if (!width || width > 100) throw orderError_('SHEET_HEADERS_MISMATCH');
+  const range = sheet.getRange(1,1,1,width);
+  const headers = range.getValues()[0];
+  if (headers.some(value => typeof value !== 'string' || !value.trim()) ||
+      new Set(headers).size !== headers.length || range.getFormulas()[0].some(Boolean)) {
+    throw orderError_('SHEET_HEADERS_MISMATCH');
+  }
+  return headers;
+}
+function sheetLayout_(sheet) {
+  const headers = readHeaders_(sheet);
+  const columns = {};
+  headers.forEach((header,index) => { columns[header] = index; });
+  if (VUA_TOI_HEADERS_.some(header => columns[header] === undefined)) throw orderError_('SHEET_HEADERS_MISMATCH');
+  return {columns,width:headers.length};
+}
+function canonicalRow_(row,layout) {
+  return VUA_TOI_HEADERS_.map(header => row[layout.columns[header]]);
 }
 
 function money_(amount) {
   return String(amount).replace(/\B(?=(\d{3})+(?!\d))/g,'.') + ' ₫';
 }
-function preparePriceColumns_(sheet) {
-  sheet.setColumnWidth(13,300);
-  sheet.setColumnWidth(14,340);
-  sheet.setColumnWidth(15,180);
-  sheet.getRange(1,13,1,3).setWrap(true);
+function preparePriceColumns_(sheet,layout) {
+  ['Đơn giá từng bộ (VNĐ)','Thành tiền từng bộ (VNĐ)','Tổng tiền hàng (VNĐ)'].forEach((header,index) => {
+    const column = layout.columns[header]+1;
+    sheet.setColumnWidth(column,[300,340,180][index]);
+    sheet.getRange(1,column).setWrap(true);
+  });
 }
 function plainSheetText_(value) {
   const text = String(value === undefined || value === null ? '' : value);
@@ -237,44 +278,48 @@ function parseStoredItems_(value) {
   if (items.length>6) throw orderError_('DATA_INTEGRITY');
   return items.sort((a,b) => VUA_TOI_PRODUCTS_.indexOf(a.product)-VUA_TOI_PRODUCTS_.indexOf(b.product));
 }
-function backfillPricing_(sheet) {
+function backfillPricing_(sheet,layout) {
   const count = sheet.getLastRow()-1;
   if (count<1) return;
-  const rows = sheet.getRange(2,7,count,9).getValues();
-  const formulas = sheet.getRange(2,13,count,3).getFormulas();
-  rows.forEach((row,index) => {
+  const range = sheet.getRange(2,1,count,layout.width);
+  const rows = range.getValues();
+  const formulas = range.getFormulas();
+  rows.forEach((physical,index) => {
+    const row = canonicalRow_(physical,layout);
+    const rowFormulas = canonicalRow_(formulas[index],layout);
     // Fill only wholly empty price fields; preserve every recorded snapshot.
-    if (!row[0] || !row.slice(6,9).every(value => value === '') || formulas[index].some(Boolean)) return;
+    if (!row[6] || !row.slice(11,14).every(value => value === '') || rowFormulas.slice(11,14).some(Boolean)) return;
     let items;
-    try { items = parseStoredItems_(row[0]); } catch (_) { return; }
+    try { items = parseStoredItems_(row[6]); } catch (_) { return; }
     const pricing = pricingFor_(items);
-    sheet.getRange(index+2,13,1,3).setNumberFormat('@');
-    sheet.getRange(index+2,15).setNumberFormat('#,##0" ₫"');
-    sheet.getRange(index+2,13,1,3).setValues([[
-      sheetText_(pricing.unitPrices),sheetText_(pricing.lineTotals),pricing.total
-    ]]);
-    sheet.getRange(index+2,13,1,2).setWrap(true);
+    const values = [sheetText_(pricing.unitPrices),sheetText_(pricing.lineTotals),pricing.total];
+    ['Đơn giá từng bộ (VNĐ)','Thành tiền từng bộ (VNĐ)','Tổng tiền hàng (VNĐ)'].forEach((header,field) => {
+      const cell = sheet.getRange(index+2,layout.columns[header]+1);
+      cell.setNumberFormat(field === 2 ? '#,##0" ₫"' : '@').setValues([[values[field]]]);
+      if (field < 2) cell.setWrap(true);
+    });
     sheet.autoResizeRows(index+2,1);
   });
 }
-function backfillRequestTypes_(sheet) {
+function backfillRequestTypes_(sheet,layout) {
   const count = sheet.getLastRow()-1;
   if (count<1) return;
-  const rows = sheet.getRange(2,11,count,6).getValues();
-  const formulas = sheet.getRange(2,16,count,1).getFormulas();
+  const rows = sheet.getRange(2,1,count,layout.width).getValues();
+  const typeColumn = layout.columns['Loại yêu cầu']+1;
+  const formulas = sheet.getRange(2,typeColumn,count,1).getFormulas();
   rows.forEach((row,index) => {
-    if (row[5] !== '' || formulas[index][0]) return;
-    const source = plainSheetText_(row[0]);
+    if (row[typeColumn-1] !== '' || formulas[index][0]) return;
+    const source = plainSheetText_(row[layout.columns['Nguồn form']]);
     const type = source === 'consultation-form' ? 'Tư vấn' :
       ['quick-form','contact-form'].includes(source) ? 'Đặt hàng' : '';
-    if (type) sheet.getRange(index+2,16).setNumberFormat('@').setValues([[sheetText_(type)]]);
+    if (type) sheet.getRange(index+2,typeColumn).setNumberFormat('@').setValues([[sheetText_(type)]]);
   });
 }
 function assertPricing_(actual, items, expectedPricing) {
   let pricing = expectedPricing;
   if (!pricing) {
     // Retries use saved unit prices even if the catalogue changes later.
-    const lines = plainSheetText_(actual[12]).split('\n');
+    const lines = plainSheetText_(actual[11]).split('\n');
     if (lines.length !== items.length) throw orderError_('VERIFY_FAILED');
     const prices = {};
     items.forEach((item,index) => {
@@ -290,8 +335,8 @@ function assertPricing_(actual, items, expectedPricing) {
     });
     pricing = pricingFor_(items,prices);
   }
-  if (plainSheetText_(actual[12])!==pricing.unitPrices || plainSheetText_(actual[13])!==pricing.lineTotals ||
-      actual[14]!==pricing.total) throw orderError_('VERIFY_FAILED');
+  if (plainSheetText_(actual[11])!==pricing.unitPrices || plainSheetText_(actual[12])!==pricing.lineTotals ||
+      actual[13]!==pricing.total) throw orderError_('VERIFY_FAILED');
 }
 
 function validRequestId_(value) {
@@ -388,14 +433,14 @@ function sheetText_(value) {
   return "'" + String(value);
 }
 
-function assertStored_(range, order, fingerprint, expectedTime, expectedPricing) {
-  const actual = range.getValues()[0];
+function assertStored_(range, layout, order, fingerprint, expectedTime, expectedPricing) {
+  const actual = canonicalRow_(range.getValues()[0],layout);
   const consultation = order.kind === 'consultation';
-  if (range.getFormulas()[0].some(formula => formula !== '')) throw orderError_('VERIFY_FAILED');
+  if (canonicalRow_(range.getFormulas()[0],layout).some(Boolean)) throw orderError_('VERIFY_FAILED');
   const expected = [
     'VT-' + order.requestId, order.requestId, null, order.name, order.phone, order.email,
     formatItems_(order.items), consultation ? '' : totalQuantity_(order.items),
-    order.occasion, order.notes, order.source, fingerprint
+    order.notes, order.source, fingerprint
   ];
   for (let index = 0; index < expected.length; index++) {
     if (index === 2) continue;
@@ -407,9 +452,9 @@ function assertStored_(range, order, fingerprint, expectedTime, expectedPricing)
     }
   }
   if (consultation) {
-    if (!actual.slice(12,15).every(value => plainSheetText_(value) === '')) throw orderError_('VERIFY_FAILED');
+    if (!actual.slice(11,14).every(value => plainSheetText_(value) === '')) throw orderError_('VERIFY_FAILED');
   } else assertPricing_(actual,order.items,expectedPricing);
-  if (plainSheetText_(actual[15]) !== (consultation ? 'Tư vấn' : 'Đặt hàng')) throw orderError_('VERIFY_FAILED');
+  if (plainSheetText_(actual[14]) !== (consultation ? 'Tư vấn' : 'Đặt hàng')) throw orderError_('VERIFY_FAILED');
   if (!(actual[2] instanceof Date) || !Number.isFinite(actual[2].getTime()) ||
       (expectedTime && Math.abs(actual[2].getTime() - expectedTime.getTime()) > 2000)) {
     throw orderError_('VERIFY_FAILED');

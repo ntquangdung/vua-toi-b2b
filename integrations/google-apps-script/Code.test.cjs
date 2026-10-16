@@ -28,6 +28,10 @@ function fixture(options = {}) {
     setColumnWidth() {},
     autoResizeRows() {},
     hideColumns(col) { state.hiddenColumns.add(col); },
+    deleteColumn(col) {
+      for (const collection of [state.rows,state.formulas]) collection.forEach(row=>row.splice(col-1,1));
+      state.hiddenColumns=new Set([...state.hiddenColumns].filter(value=>value!==col).map(value=>value>col?value-1:value));
+    },
     moveColumns(range, destination) {
       const source = range.getColumn();
       assert.equal(range.getNumColumns(),1);
@@ -35,7 +39,7 @@ function fixture(options = {}) {
       state.moves.push([source,destination]);
       for(const collection of [state.rows,state.formulas]) {
         collection.forEach(row => {
-          while(row.length<16) row.push('');
+          while(row.length<15) row.push('');
           const [value]=row.splice(source-1,1);
           row.splice(destination-1,0,value);
         });
@@ -70,7 +74,7 @@ function fixture(options = {}) {
         getValues() {
           const values = Array.from({ length: rowCount }, (_, r) =>
             Array.from({ length: colCount }, (_, c) => state.rows[row + r - 1]?.[col + c - 1] ?? ''));
-          if (state.corruptRead && row > 1 && colCount === 16) values[0][6] = 'Edited product';
+          if (state.corruptRead && row > 1 && colCount === 15) values[0][6] = 'Edited product';
           return values;
         },
         getFormulas() {
@@ -142,11 +146,11 @@ function order(overrides = {}) {
 }
 
 function legacyRow(row,length=15) {
-  return [row[0],row[1],row[2],row[3],row[4],row[6],row[7],row[8],row[9],row[10],row[11],row[5],row[12],row[13],row[14]].slice(0,length);
+  return [row[0],row[1],row[2],row[3],row[4],row[6],row[7],row[0]==='Mã đơn'?'Dịp tặng':'Biếu người thân',row[8],row[9],row[10],row[5],row[11],row[12],row[13]].slice(0,length);
 }
 function useLegacySchema(state,length=15) {
   state.rows=state.rows.map(row=>legacyRow(row,length));
-  state.formulas=state.formulas.map(row=>legacyRow(row,length));
+  state.formulas=state.formulas.map(row=>{ const values=legacyRow(row,length); values[7]=''; return values; });
   state.hiddenColumns.clear();
 }
 function lead(overrides={}) {
@@ -168,7 +172,7 @@ check('valid order is flushed and read back before ACK', () => {
   assert.equal(state.rows[1][4], '0935123456');
   assert.equal(state.rows[1][7], 2);
   assert.ok(state.rows[1][2] instanceof Date);
-  assert.ok(state.formats.some(item => item.row === 2 && item.col === 1 && item.colCount === 16 && item.format === '@'));
+  assert.ok(state.formats.some(item => item.row === 2 && item.col === 1 && item.colCount === 15 && item.format === '@'));
   assert.ok(state.formats.some(item => item.row === 2 && item.col === 3 && item.format === 'dd/MM/yyyy HH:mm:ss'));
   assert.ok(state.formats.some(item => item.row === 2 && item.col === 8 && item.format === '0'));
   assert.equal(state.flushes, 1);
@@ -229,9 +233,9 @@ check('quick form defaults optional fields and keeps its source', () => {
   delete payload.occasion;
   delete payload.notes;
   assert.equal(context.saveOrder(payload, origin).saved, true);
-  assert.equal(state.rows[1][8], 'Cần tư vấn');
-  assert.equal(state.rows[1][9], '');
-  assert.equal(state.rows[1][10], 'quick-form');
+  assert.equal(state.rows[0].includes('Dịp tặng'), false);
+  assert.equal(state.rows[1][8], '');
+  assert.equal(state.rows[1][9], 'quick-form');
 });
 
 check('formula-looking strings and plus-prefixed telephone stay text', () => {
@@ -240,9 +244,9 @@ check('formula-looking strings and plus-prefixed telephone stay text', () => {
   assert.equal(context.saveOrder(payload, origin).saved, true);
   assert.equal(state.rows[1][3], payload.name);
   assert.equal(state.rows[1][4], payload.phone);
-  assert.equal(state.rows[1][9], payload.notes);
+  assert.equal(state.rows[1][8], payload.notes);
   assert.ok(state.formulas[1].every(value => value === ''));
-  assert.ok(state.rawWrites.filter(write => [3, 4, 5, 6, 8, 9, 10].includes(write.col))
+  assert.ok(state.rawWrites.filter(write => [3, 4, 5, 6, 8, 9].includes(write.col))
     .every(write => write.value.startsWith("'")));
 });
 
@@ -447,7 +451,7 @@ check('existing 11-column orders gain an Email header without changing old rows 
   const oldFingerprint=crypto.createHash('sha256').update(JSON.stringify([
     payload.name,payload.phone,payload.items,payload.occasion,payload.notes,payload.source
   ])).digest('hex');
-  assert.equal(state.rows[1][11],oldFingerprint);
+  assert.equal(state.rows[1][10],oldFingerprint);
   useLegacySchema(state,11);
   const previousRow=[...state.rows[1]];
   assert.equal(context.saveOrder(payload,origin).saved,true);
@@ -475,16 +479,16 @@ check('unit prices and order totals come from the server catalogue for every set
     const {state,context}=fixture();
     const product='Hộp quà '+name;
     assert.equal(context.saveOrder(order({product,quantity:2}),origin).saved,true);
-    assert.equal(state.rows[1][12],product+': '+context.money_(sellingPrices[index]));
-    assert.equal(state.rows[1][14],sellingPrices[index]*2);
-    assert.equal(typeof state.rows[1][14],'number');
-    assert.ok(state.formats.some(item=>item.col===15&&item.format.includes('₫')));
+    assert.equal(state.rows[1][11],product+': '+context.money_(sellingPrices[index]));
+    assert.equal(state.rows[1][13],sellingPrices[index]*2);
+    assert.equal(typeof state.rows[1][13],'number');
+    assert.ok(state.formats.some(item=>item.col===14&&item.format.includes('₫')));
   });
   const {state,context}=fixture();
   const items=[{product:'Hộp quà An Khang',quantity:2},{product:'Hộp quà Phúc An',quantity:3}];
   assert.equal(context.saveOrder(order({items}),origin).saved,true);
-  assert.equal(state.rows[1][13],'Hộp quà An Khang × 2: 1.318.000 ₫\nHộp quà Phúc An × 3: 1.965.000 ₫');
-  assert.equal(state.rows[1][14],3283000);
+  assert.equal(state.rows[1][12],'Hộp quà An Khang × 2: 1.318.000 ₫\nHộp quà Phúc An × 3: 1.965.000 ₫');
+  assert.equal(state.rows[1][13],3283000);
   assert.equal(context.saveOrder(order({requestId:'request-price-forged',price:1}),origin).error.code,'INVALID_REQUEST');
 });
 
@@ -494,21 +498,21 @@ check('12-column orders are backfilled once without changing customer details or
   useLegacySchema(state,12);
   const previousRow=[...state.rows[1]];
   assert.equal(context.saveOrder(order({requestId:'request-priced-00002'}),origin).saved,true);
-  assert.equal(state.rows[0][12],'Đơn giá từng bộ (VNĐ)');
-  assert.equal(state.rows[0][14],'Tổng tiền hàng (VNĐ)');
+  assert.equal(state.rows[0][11],'Đơn giá từng bộ (VNĐ)');
+  assert.equal(state.rows[0][13],'Tổng tiền hàng (VNĐ)');
   assert.deepEqual(legacyRow(state.rows[1],12),previousRow);
-  assert.equal(state.rows[1][14],1318000);
+  assert.equal(state.rows[1][13],1318000);
   // A historical price remains valid when the current catalogue differs.
-  state.rows[1][12]='Hộp quà An Khang: 650.000 ₫';
-  state.rows[1][13]='Hộp quà An Khang × 2: 1.300.000 ₫';
-  state.rows[1][14]=1300000;
+  state.rows[1][11]='Hộp quà An Khang: 650.000 ₫';
+  state.rows[1][12]='Hộp quà An Khang × 2: 1.300.000 ₫';
+  state.rows[1][13]=1300000;
   assert.equal(context.saveOrder(order({email:'qa@example.invalid'}),origin).saved,true);
-  assert.equal(state.rows[1][14],1300000);
+  assert.equal(state.rows[1][13],1300000);
   assert.equal(state.rows.length,3);
 });
 
 check('price readback rejects an incorrect subtotal, text total, or inconsistent snapshot', () => {
-  for(const [column,value] of [[13,'Wrong subtotal'],[14,'1318000'],[14,1],[12,'Hộp quà An Khang: 1 ₫']]){
+  for(const [column,value] of [[12,'Wrong subtotal'],[13,'1318000'],[13,1],[11,'Hộp quà An Khang: 1 ₫']]){
     const {state,context}=fixture();
     assert.equal(context.saveOrder(order(),origin).saved,true);
     state.rows[1][column]=value;
@@ -521,17 +525,17 @@ check('backfill skips unknown item rows, partial prices, and empty-looking formu
   const {state,context}=fixture();
   assert.equal(context.saveOrder(order(),origin).saved,true);
   const first=state.rows[1];
-  const formulaRow=[...first]; formulaRow[1]='request-formula-00001'; formulaRow[12]='';formulaRow[13]='';formulaRow[14]='';
-  const partialRow=[...formulaRow];partialRow[1]='request-partial-00001';partialRow[12]='Manual price';
+  const formulaRow=[...first]; formulaRow[1]='request-formula-00001'; formulaRow[11]='';formulaRow[12]='';formulaRow[13]='';
+  const partialRow=[...formulaRow];partialRow[1]='request-partial-00001';partialRow[11]='Manual price';
   const unknownRow=[...formulaRow];unknownRow[1]='request-unknown-00001';unknownRow[6]='Unknown product × 1';
   state.rows.push(formulaRow,partialRow,unknownRow);
-  state.formulas.push(Array(16).fill(''),Array(16).fill(''),Array(16).fill(''));
-  state.formulas[2][14]='=""';
+  state.formulas.push(Array(15).fill(''),Array(15).fill(''),Array(15).fill(''));
+  state.formulas[2][13]='=""';
   assert.equal(context.saveOrder(order({requestId:'request-after-000001'}),origin).saved,true);
-  assert.equal(state.formulas[2][14],'=""');
-  assert.equal(state.rows[2][14],'');
-  assert.equal(state.rows[3][12],'Manual price');
-  assert.equal(state.rows[4][14],'');
+  assert.equal(state.formulas[2][13],'=""');
+  assert.equal(state.rows[2][13],'');
+  assert.equal(state.rows[3][11],'Manual price');
+  assert.equal(state.rows[4][13],'');
 });
 
 check('V3 migration moves Email to F, preserves every order field, and hides technical columns', () => {
@@ -544,9 +548,9 @@ check('V3 migration moves Email to F, preserves every order field, and hides tec
   assert.equal(context.saveOrder(payload,origin).saved,true);
   assert.deepEqual(state.rows[1],expected);
   assert.equal(state.rows[0][5],'Email');
-  assert.equal(state.rows[0][15],'Loại yêu cầu');
-  assert.deepEqual(state.moves,[[12,6]]);
-  assert.deepEqual([...state.hiddenColumns].sort((a,b)=>a-b),[2,12]);
+  assert.equal(state.rows[0][14],'Loại yêu cầu');
+  assert.deepEqual(state.moves,[[11,6]]);
+  assert.deepEqual([...state.hiddenColumns].sort((a,b)=>a-b),[2,11]);
   assert.equal(state.rows.length,2);
 });
 
@@ -555,7 +559,7 @@ check('an interrupted migration resumes without moving Email twice or touching s
   const payload=order({email:'qa-resume@example.invalid'});
   assert.equal(context.saveOrder(payload,origin).saved,true);
   const expected=[...state.rows[1]];
-  state.rows.forEach(row=>row.splice(15));
+  state.rows.forEach(row=>row.splice(14));
   state.formulas.forEach(row=>row.splice(15));
   assert.equal(context.saveOrder(payload,origin).saved,true);
   assert.deepEqual(state.rows[1],expected);
@@ -571,13 +575,13 @@ check('consultation stores contact details and type with blank gifts and prices'
   assert.equal(state.rows[1][3],payload.name);
   assert.equal(state.rows[1][4],'0000000000');
   assert.equal(state.rows[1][5],payload.email);
-  assert.deepEqual(state.rows[1].slice(6,10),['','','','']);
-  assert.deepEqual(state.rows[1].slice(12,15),['','','']);
-  assert.equal(state.rows[1][15],'Tư vấn');
+  assert.deepEqual(state.rows[1].slice(6,9),['','','']);
+  assert.deepEqual(state.rows[1].slice(11,14),['','','']);
+  assert.equal(state.rows[1][14],'Tư vấn');
   assert.equal(context.saveOrder(payload,origin).saved,true);
   assert.equal(state.rows.length,2);
   assert.equal(context.saveOrder(lead({email:'changed@example.invalid'}),origin).error.code,'REQUEST_ID_CONFLICT');
-  state.rows[1][14]=0;
+  state.rows[1][13]=0;
   assert.equal(context.saveOrder(payload,origin).error.code,'VERIFY_FAILED');
 });
 
@@ -590,6 +594,72 @@ check('consultation accepts optional Email and rejects gifts, forged amounts or 
     const {state,context}=fixture();
     assert.equal(context.saveOrder(lead(patch),origin).saved,false,JSON.stringify(patch));
     assert.equal(state.rows.length,0);
+  }
+});
+
+check('staff column order is preserved while orders, leads and retries use header names', () => {
+  const {state,context}=fixture();
+  const payload=order({email:'qa-reorder@example.invalid'});
+  assert.equal(context.saveOrder(payload,origin).saved,true);
+  const positions=[0,1,2,3,4,5,6,7,14,10,11,12,13,9,8];
+  state.rows=state.rows.map(row=>positions.map(index=>row[index]));
+  state.formulas=state.formulas.map(row=>positions.map(index=>row[index]));
+  state.rows[0].push('Nhân viên xử lý');state.rows[1].push('Giữ dữ liệu nhân viên');
+  state.formulas[0].push('');state.formulas[1].push('');
+  state.hiddenColumns.clear();
+  const headers=[...state.rows[0]], historical=[...state.rows[1]];
+  assert.equal(context.saveOrder(payload,origin).saved,true);
+  assert.equal(context.saveOrder(lead(),origin).saved,true);
+  assert.equal(context.saveOrder(order({requestId:'request-reordered-02',items:[
+    {product:'Hộp quà An Khang',quantity:1},{product:'Hộp quà Phúc Lộc',quantity:2}
+  ]}),origin).saved,true);
+  const value=(row,header)=>state.rows[row][headers.indexOf(header)];
+  assert.deepEqual(state.rows[0],headers);
+  assert.deepEqual(state.rows[1],historical);
+  assert.equal(value(2,'Loại yêu cầu'),'Tư vấn');
+  assert.equal(value(2,'Email'),'qa-lead@example.invalid');
+  assert.equal(value(2,'Tổng tiền hàng (VNĐ)'),'');
+  assert.equal(value(3,'Tổng tiền hàng (VNĐ)'),1437000);
+  assert.equal(value(3,'Thành tiền từng bộ (VNĐ)'),'Hộp quà An Khang × 1: 659.000 ₫\nHộp quà Phúc Lộc × 2: 778.000 ₫');
+  assert.deepEqual([...state.hiddenColumns].sort((a,b)=>a-b),[2,10]);
+  assert.equal(state.moves.length,0);
+});
+
+check('V4 occasion column is removed without changing any other stored field or retry hash', () => {
+  const {state,context}=fixture();
+  const payload=order();
+  assert.equal(context.saveOrder(payload,origin).saved,true);
+  const headers=[...state.rows[0]], historical=[...state.rows[1]];
+  state.rows[0].splice(8,0,'Dịp tặng');state.rows[1].splice(8,0,payload.occasion);
+  state.formulas.forEach(row=>row.splice(8,0,''));
+  assert.equal(context.saveOrder(payload,origin).saved,true);
+  assert.deepEqual(state.rows[0],headers);
+  assert.deepEqual(state.rows[1],historical);
+  assert.equal(state.rows.length,2);
+});
+
+check('reordered empty prices and type are backfilled by name without replacing snapshots', () => {
+  const {state,context}=fixture();
+  assert.equal(context.saveOrder(order(),origin).saved,true);
+  const positions=[0,1,2,3,4,5,6,7,14,10,11,12,13,9,8];
+  state.rows=state.rows.map(row=>positions.map(index=>row[index]));
+  state.formulas=state.formulas.map(row=>positions.map(index=>row[index]));
+  for(const name of ['Loại yêu cầu','Đơn giá từng bộ (VNĐ)','Thành tiền từng bộ (VNĐ)','Tổng tiền hàng (VNĐ)'])
+    state.rows[1][state.rows[0].indexOf(name)]='';
+  assert.equal(context.saveOrder(order(),origin).saved,true);
+  assert.equal(state.rows[1][8],'Đặt hàng');
+  assert.equal(state.rows[1][10],'Hộp quà An Khang: 659.000 ₫');
+  assert.equal(state.rows[1][12],1318000);
+});
+
+check('duplicate or renamed system headers fail without changing data or column order', () => {
+  for(const replacement of ['Email','gm']) {
+    const {state,context}=fixture();
+    assert.equal(context.saveOrder(order(),origin).saved,true);
+    state.rows[0][8]=replacement;
+    const before=JSON.stringify(state.rows);
+    assert.equal(context.saveOrder(lead(),origin).error.code,'SHEET_HEADERS_MISMATCH');
+    assert.equal(JSON.stringify(state.rows),before);
   }
 });
 

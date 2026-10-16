@@ -107,7 +107,7 @@
       };
       if (consultation) payload.kind = 'consultation';
       else Object.assign(payload, {
-        items:picker.getItems(), occasion:field('occasion')?.value || '',
+        items:picker.getItems(),
         notes:normalise(field('notes')?.value),
       });
       const digits = payload.phone.replace(/\D/g, '');
