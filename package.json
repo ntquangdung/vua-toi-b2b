@@ -1,0 +1,11 @@
+{
+  "name": "vua-toi-b2b",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page hộp quà Vua Tỏi",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/orders.test.cjs && node integrations/google-apps-script/Code.test.cjs"
+  },
+  "engines": { "node": ">=20" }
+}

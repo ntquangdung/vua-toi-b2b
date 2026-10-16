@@ -1,0 +1,97 @@
+{
+  "source_archive": "HỘP QUÀ TẶNG VUA TỎI.zip",
+  "note": "Thông tin từ ảnh 1–7; ảnh 7 xác nhận tên đầy đủ tỏi Lý Sơn – ớt xiêm rừng và hotline. original_price là giá gốc gạch trong ảnh, price là giá KM khi có cả hai. Thịnh Vượng chỉ có một giá và không gắn nhãn KM. Ảnh không có ngày hiệu lực giá. Không suy đoán trọng lượng, dung tích hoặc điều kiện chiết khấu.",
+  "phone": "0935 176 188",
+  "products": [
+    {
+      "id": "an-khang",
+      "name": "An Khang",
+      "image": 1,
+      "price": 659000,
+      "contents": [
+        "2 hũ tỏi đen"
+      ],
+      "categories": [
+        "black"
+      ],
+      "original_price": 736000
+    },
+    {
+      "id": "phuc-tho",
+      "name": "Phúc Thọ",
+      "image": 2,
+      "price": 639000,
+      "contents": [
+        "2 hũ mật ong tỏi đen"
+      ],
+      "categories": [
+        "honey"
+      ],
+      "original_price": 720000
+    },
+    {
+      "id": "thinh-vuong",
+      "name": "Thịnh Vượng",
+      "image": 3,
+      "price": 399000,
+      "contents": [
+        "1 chai rượu tỏi đen"
+      ],
+      "categories": [
+        "wine"
+      ],
+      "original_price": null
+    },
+    {
+      "id": "phuc-an",
+      "name": "Phúc An",
+      "image": 4,
+      "price": 655000,
+      "contents": [
+        "1 tỏi đen",
+        "1 mật ong tỏi đen"
+      ],
+      "categories": [
+        "black",
+        "honey"
+      ],
+      "original_price": 728000
+    },
+    {
+      "id": "truong-tho",
+      "name": "Trường Thọ",
+      "image": 5,
+      "price": 399000,
+      "contents": [
+        "1 tỏi đen",
+        "1 tỏi Lý Sơn – ớt xiêm rừng"
+      ],
+      "categories": [
+        "black",
+        "chili"
+      ],
+      "original_price": 454000
+    },
+    {
+      "id": "phuc-loc",
+      "name": "Phúc Lộc",
+      "image": 6,
+      "price": 389000,
+      "contents": [
+        "1 mật ong tỏi đen",
+        "1 tỏi Lý Sơn – ớt xiêm rừng"
+      ],
+      "categories": [
+        "honey",
+        "chili"
+      ],
+      "original_price": 446000
+    }
+  ],
+  "excluded_images": [
+    {
+      "image": 8,
+      "reason": "Bộ Phúc Lành được bỏ khỏi danh mục theo yêu cầu người dùng; ảnh gốc vẫn được lưu để đối chiếu."
+    }
+  ]
+}

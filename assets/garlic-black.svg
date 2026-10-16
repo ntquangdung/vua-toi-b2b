@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
+  <title>Tỏi đen hé lớp vỏ — minh họa thực vật Vua Tỏi</title>
+  <desc>Minh họa nguyên bản củ tỏi hé vỏ giấy trắng ngà, lộ hai múi đen tím. Nét vàng mảnh và nhánh lá trang trí, nền trong suốt.</desc>
+  <defs>
+    <linearGradient id="paper" x1="169" y1="241" x2="456" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFDF7"/><stop offset=".5" stop-color="#FFF6E9"/><stop offset="1" stop-color="#E2CAA0"/>
+    </linearGradient>
+    <linearGradient id="paper-fold" x1="168" y1="308" x2="290" y2="513" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFE0C4"/><stop offset=".42" stop-color="#FFFAF0"/><stop offset="1" stop-color="#D8BD8A"/>
+    </linearGradient>
+    <linearGradient id="neck" x1="283" y1="108" x2="360" y2="257" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6E9"/><stop offset=".53" stop-color="#E2CAA0"/><stop offset="1" stop-color="#FAEFD9"/>
+    </linearGradient>
+    <linearGradient id="clove" x1="286" y1="276" x2="373" y2="563" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#493541"/><stop offset=".34" stop-color="#2D232D"/><stop offset=".74" stop-color="#201C24"/><stop offset="1" stop-color="#382A34"/>
+    </linearGradient>
+    <linearGradient id="clove-side" x1="392" y1="284" x2="480" y2="519" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59404B"/><stop offset=".42" stop-color="#30232E"/><stop offset="1" stop-color="#17171E"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="156" y1="225" x2="490" y2="562" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D7BC7F"/><stop offset=".5" stop-color="#C5A052"/><stop offset="1" stop-color="#A98542"/>
+    </linearGradient>
+    <radialGradient id="shadow"><stop stop-color="#3E2A25" stop-opacity=".16"/><stop offset="1" stop-color="#3E2A25" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g stroke="#C5A052" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".73">
+    <path d="M143 302C125 261 114 214 112 164"/>
+    <path d="M124 256C106 247 96 232 94 211C113 220 124 235 124 256Z" fill="#FFF6E9"/>
+    <path d="M116 220C122 198 135 185 154 180C149 200 136 214 116 220Z" fill="#FFF6E9"/>
+    <path d="M113 183C101 167 100 147 107 129C121 145 123 164 113 183Z" fill="#FFF6E9"/>
+    <path d="M136 285C140 263 149 249 168 242C166 264 155 278 136 285Z" fill="#FFF6E9"/>
+  </g>
+  <ellipse cx="331" cy="584" rx="225" ry="31" fill="url(#shadow)"/>
+  <path d="M270 259C292 222 298 193 293 160C289 123 299 86 316 54C320 48 328 48 328 56C327 88 333 121 341 153C348 184 342 212 359 240L381 262L270 259Z" fill="url(#neck)" stroke="url(#gold)" stroke-width="2"/>
+  <g stroke="#A98A50" stroke-linecap="round" opacity=".55">
+    <path d="M316 72C304 112 309 141 314 169C318 199 311 229 302 250" stroke-width="1.4"/>
+    <path d="M326 126C333 163 329 210 340 246M296 182C300 210 289 236 284 253" stroke-width="1.1"/>
+  </g>
+  <!-- The whole paper skin establishes the bulb silhouette behind the open cloves. -->
+  <path d="M306 237C258 232 208 252 174 289C136 331 124 393 139 453C153 514 194 556 250 573C294 586 343 579 382 580C431 580 482 558 512 518C550 467 555 406 534 352C510 290 447 255 391 248C357 243 329 240 306 237Z" fill="url(#paper)" stroke="url(#gold)" stroke-width="2.2"/>
+  <!-- Two exposed cloves, broad at the base and tapered at their dry tips. -->
+  <path d="M390 252C372 285 369 324 358 366C345 415 340 477 362 522C376 549 409 561 441 551C490 535 515 490 512 443C509 392 482 345 449 308C430 286 407 268 390 252Z" fill="url(#clove-side)" stroke="url(#gold)" stroke-width="1.9"/>
+  <path d="M389 255C405 287 427 309 446 336C479 381 494 424 489 466C485 507 464 536 434 548" stroke="#B79866" stroke-width="1.1" opacity=".42"/>
+  <path d="M318 256C293 281 276 315 259 355C237 409 219 467 234 517C243 548 268 568 299 571C337 575 371 554 387 519C409 471 402 409 382 359C368 324 344 286 318 256Z" fill="url(#clove)" stroke="url(#gold)" stroke-width="1.9"/>
+  <path d="M319 259C310 294 291 323 279 361C263 411 253 467 262 510C267 534 278 552 295 565" stroke="#E2C98F" stroke-width="1.3" opacity=".34"/>
+  <path d="M331 289C351 328 371 372 379 418C389 476 380 519 353 548" stroke="#A48667" stroke-width="1.1" opacity=".26"/>
+  <!-- Restrained highlights keep the clove surface matte, rather than plastic. -->
+  <path d="M294 340C276 376 266 410 263 445" stroke="#9E798A" stroke-width="8" stroke-linecap="round" opacity=".13"/>
+  <path d="M425 319C452 350 471 385 477 418" stroke="#B69AAB" stroke-width="7" stroke-linecap="round" opacity=".12"/>
+  <g stroke="#967A7E" stroke-width="1" stroke-linecap="round" opacity=".25">
+    <path d="M286 487L277 499M295 515L288 528M353 474L363 488M367 425L376 438M422 480L414 492M457 447L469 453M441 388L449 400"/>
+  </g>
+  <!-- A curled paper flap makes the opening readable without inventing a face. -->
+  <path d="M307 239C274 271 249 320 232 370C214 423 207 473 224 519C234 546 252 563 274 577C229 575 196 557 174 528C144 488 134 435 143 388C152 341 175 303 211 277C240 256 273 244 307 239Z" fill="url(#paper-fold)" stroke="url(#gold)" stroke-width="1.7"/>
+  <path d="M306 240C268 264 240 304 219 349C194 406 188 463 202 511C212 545 236 567 273 577" stroke="#C5A052" stroke-width="1.2" opacity=".6"/>
+  <path d="M231 371C213 414 207 454 215 493C185 463 174 429 184 394C192 364 211 341 237 327C230 344 229 358 231 371Z" fill="#FFF9EF" stroke="url(#gold)" stroke-width="1.2"/>
+  <path d="M183 399C190 415 200 429 213 439" stroke="#C5A052" stroke-width="1" opacity=".5"/>
+  <!-- An outer lobe of paper wraps the far edge of the second clove. -->
+  <path d="M428 262C481 282 517 315 534 360C556 417 543 478 509 520C489 545 463 562 429 571C473 540 502 501 510 455C520 391 486 313 428 262Z" fill="url(#paper)" stroke="url(#gold)" stroke-width="1.4"/>
+  <path d="M474 321C515 371 526 430 507 480" stroke="#C5A052" stroke-width="1" opacity=".45"/>
+  <g stroke="#AA8848" stroke-width="1.4" stroke-linecap="round" opacity=".82">
+    <path d="M285 579L276 594M298 580L294 600M311 581L316 603M325 580L337 598M342 578L355 592"/>
+  </g>
+  <path d="M540 270C552 255 568 252 582 258C570 272 556 277 540 270Z" fill="#B00D13" opacity=".84"/>
+</svg>

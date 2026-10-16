@@ -1,0 +1,1205 @@
+/* Vua Tỏi — campaign landing page in cream, red and gold. */
+@font-face{font-family:'Manrope';src:url('assets/fonts/manrope-variable.ttf') format('truetype');font-style:normal;font-weight:200 800;font-display:swap}
+@font-face{font-family:'Red Rose';src:url('assets/fonts/red-rose-variable.ttf') format('truetype');font-style:normal;font-weight:300 700;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('assets/fonts/playfair-display-variable.ttf') format('truetype');font-style:normal;font-weight:400 900;font-display:swap}
+
+:root{--red:#ac080e;--red-hover:#c01119;--cream:#fff6e9;--paper:#fefbf2;--gold:#c79740;--gold-fresh:#ffde59;--gold-light:#ffe99a;--gold-text:#8b5d12;--line:#dfc58e;--ink:#62451f;--muted:#806745;--white:#fff;--font-body:'Manrope','Segoe UI',sans-serif;--font-display:'Red Rose','Segoe UI',sans-serif;--content-width:1040px;--reveal-delay:0ms}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;color:var(--ink);background:var(--paper);font:15px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+body.modal-open{overflow:hidden}
+
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button,summary{cursor:pointer}
+button{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3,p{margin:0}
+[hidden]{display:none!important}
+::selection{background:var(--red);color:var(--cream)}
+:focus-visible{outline:3px solid var(--red);outline-offset:4px}
+
+.container{width:min(1120px,calc(100% - 64px));margin-inline:auto}
+.section{padding-block:72px}
+.icon{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+.skip-link{position:fixed;top:-90px;left:16px;z-index:100;padding:12px 20px;background:var(--red);color:#fff}
+.skip-link:focus{top:10px}
+
+.overline{color:var(--gold-text);font-size:10px;font-weight:600;line-height:1.7;letter-spacing:.12em}
+h2{color:var(--red);font-size:30px;font-weight:800;line-height:1.35;letter-spacing:-.035em}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:48px;padding:13px 21px;border:1px solid transparent;border-radius:999px;font-size:12px;font-weight:700;line-height:1.5;text-align:center;transition:background .2s,transform .2s}
+.button-red{color:var(--cream);background:var(--red)}
+.button-red:hover{background:var(--red-hover);transform:translateY(-1px)}
+.button .icon{width:17px;height:17px}
+
+.ornamental-rule{display:flex;align-items:center;justify-content:center;gap:14px;width:210px;margin:12px auto;color:var(--gold);font-size:23px;line-height:1}
+.ornamental-rule:before,.ornamental-rule:after{content:'';height:1px;flex:1;background:var(--gold)}
+.section-heading{max-width:800px;margin:0 auto 36px;text-align:center}
+.section-heading h2{margin-top:9px}
+.section-heading>p:last-child:not(.overline){margin-top:10px;color:var(--gold-text);font-size:14px}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:40;border-bottom:1px solid #e7d7b8;background:rgba(255,246,233,.98)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:25px;min-height:80px}
+.brand{display:inline-flex;align-items:center;gap:13px;flex:none}
+.brand img{width:48px;height:auto}
+.brand>span{color:var(--red);font-size:20px;font-weight:800;line-height:1.25;letter-spacing:.015em}
+.brand small{display:block;margin-top:5px;color:var(--gold-text);font-size:7px;font-weight:600;letter-spacing:.035em}
+.site-nav{display:flex;align-items:center;gap:28px}
+.site-nav a{padding-block:12px;color:var(--red);font-size:11px;font-weight:600}
+.site-nav a:hover{text-decoration:underline;text-underline-offset:5px}
+.header-phone{display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border:1px solid var(--gold);border-radius:999px;color:var(--red);font-size:12px;font-weight:700}
+.header-phone .icon{width:16px;height:16px}
+.menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;color:var(--red);background:transparent}
+.menu-toggle .icon{width:26px;height:26px}
+
+/* Crop windows retain unaltered product files and exclude printed seasonal copy. */
+.product-photo{position:relative;aspect-ratio:1.72;overflow:hidden;width:100%;background:#eed7b7}
+.product-photo img{position:absolute;top:0;left:0;width:100%;max-width:none;height:auto;transform:translateY(-20.5%)}
+.wine-product-photo{aspect-ratio:1.54}
+.wine-product-photo img{transform:translateY(-16%)}
+
+/* Campaign stage */
+.campaign-hero{position:relative;overflow:hidden;background:var(--cream)}
+.hero-layout{position:relative;z-index:2;display:grid;grid-template-columns:1.7fr 1fr;gap:34px;align-items:start;padding-block:48px 64px}
+.campaign-heading{display:grid;grid-template-columns:1.75fr .8fr;align-items:center;max-width:600px;margin:0 auto 30px}
+.campaign-heading .overline{grid-column:1/-1;margin-bottom:12px;font-size:9px;letter-spacing:.13em}
+.campaign-heading h1{color:var(--red);font-size:clamp(48px,4.8vw,69px);font-weight:800;line-height:1.04;letter-spacing:-.065em;white-space:nowrap}
+.hero-side-title{padding-left:19px;border-left:1px solid var(--gold);color:var(--gold-text);font-size:16px;font-weight:600;line-height:1.6;letter-spacing:.13em}
+.hero-side-title b{display:block;margin-top:5px;font-size:9px;font-weight:600;letter-spacing:.06em}
+.hero-tagline{grid-column:1/-1;margin-top:18px;color:var(--gold-text);font-size:10px;font-weight:600;letter-spacing:.025em}
+.campaign-heading .ornamental-rule{grid-column:1/-1;width:100%;margin-block:11px 0}
+.hero-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hero-feature{overflow:hidden;border:3px solid var(--red);border-radius:18px;background:var(--paper);transition:box-shadow .2s}
+.hero-feature:hover{box-shadow:0 8px 20px rgba(140,55,13,.12)}
+.feature-heading{padding:15px 9px 13px;color:var(--cream);background:var(--red);text-align:center}
+.feature-heading>span{display:block;font-size:13px;font-weight:800;line-height:1.4}
+.feature-heading small{display:block;margin-top:4px;color:var(--gold-light);font-size:11px}
+.hero-feature .product-photo{aspect-ratio:1.72;border:2px solid var(--gold-light);border-radius:14px}
+.hero-feature .wine-product-photo{aspect-ratio:1.72}
+.feature-footer{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;color:var(--red);font-size:19px;font-weight:800}
+.feature-footer .icon{width:18px;height:18px}
+
+.hero-consultation{border:4px solid var(--red);border-radius:23px;background:var(--red);overflow:hidden}
+.quick-form-heading{padding:20px 20px 21px;text-align:center;color:var(--cream)}
+.quick-form-heading>p{margin-bottom:11px;font-size:12px;font-weight:600}
+.quick-form-heading h2{color:var(--gold-light);font-size:31px;line-height:1.12;letter-spacing:-.025em}
+.quick-form-heading>span{display:block;margin-top:11px;color:var(--gold-light);font-size:10px}
+.quick-form-body{padding:20px 17px 16px;border-radius:19px 19px 0 0;background:var(--paper)}
+.hero-consultation .field{margin-bottom:11px}
+.hero-consultation .field label{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+.hero-consultation .field input,.hero-consultation .field select{border:1px solid #e8ca78;border-radius:999px;min-height:44px;padding:11px 15px;font-size:11px}
+.hero-consultation .button{width:100%;font-size:11px;padding-inline:15px}
+.hero-consultation .form-note{margin-top:11px;font-size:9px}
+.quick-call{display:block;margin-top:11px;text-align:center;color:var(--red);font-size:10px;font-weight:600}
+
+.hero-ornament{position:absolute;z-index:1;pointer-events:none}
+.hero-ornament-left{bottom:29px;left:max(-75px,calc(50% - 850px));width:245px;transform:rotate(-12deg)}
+.hero-ornament-right{bottom:25px;right:max(-80px,calc(50% - 850px));width:245px;transform:rotate(11deg)}
+.hero-hill{position:absolute;width:550px;height:150px;bottom:-65px;border-radius:50%;background:#f1d489}
+.hill-left{left:-170px;transform:rotate(22deg)}
+.hill-right{right:-200px;transform:rotate(-20deg)}
+.stage-ribbon{position:relative;z-index:3;height:26px;border-top:1px solid var(--gold);background:repeating-linear-gradient(90deg,#ac080e 0,#ac080e 24px,#c4161d 24px,#c4161d 47px)}
+
+/* Facts band */
+.gold-strip{background:var(--gold-fresh);color:#4d3008}
+.gold-strip-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-block:27px}
+.gold-strip-inner>div{padding-inline:26px;border-right:1px solid rgba(139,93,18,.35)}
+.gold-strip-inner>div:first-child{padding-left:0}
+.gold-strip-inner>div:last-child{border:0;padding-right:0}
+.gold-strip strong{display:block;font-size:14px;font-weight:800;line-height:1.4}
+.gold-strip span{display:block;margin-top:6px;font-size:9px;line-height:1.6}
+
+
+/* Full-width gift showcases */
+.collection-section{padding-top:0;background:repeating-linear-gradient(90deg,rgba(199,151,64,.025) 0,rgba(199,151,64,.025) 2px,transparent 2px,transparent 7px),var(--paper)}
+.gift-grid{display:grid;gap:32px}
+.gift-card{display:grid;grid-template-columns:1.08fr .92fr;min-width:0;overflow:hidden;border:2px solid var(--gold);border-radius:24px;background:var(--white)}
+.gift-image-panel{padding:0 6px 6px;background:var(--red)}
+.gift-title{min-height:104px;padding:16px 18px 17px;color:var(--gold-light);text-align:center}
+.gift-title>span{display:flex;align-items:center;justify-content:center;gap:13px;font-size:10px;font-weight:600;letter-spacing:.16em}
+.gift-title>span:before,.gift-title>span:after{content:'';width:34px;height:1px;background:rgba(255,233,154,.6)}
+.gift-title h3{margin-top:6px;color:var(--gold-light);font-size:33px;font-weight:800;line-height:1.25;letter-spacing:-.035em;text-transform:uppercase}
+.photo-button{position:relative;display:block;width:100%;padding:0;overflow:hidden;border:2px solid var(--gold-light);border-radius:18px;background:#eed7b7;text-align:left}
+.gift-card .product-photo{aspect-ratio:1.72}
+.gift-card .wine-product-photo{aspect-ratio:1.72}
+.photo-action{position:absolute;bottom:13px;right:13px;display:flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid #f0d290;border-radius:999px;color:var(--red);background:rgba(255,249,237,.97);font-size:10px;font-weight:600;transition:background .2s}
+.photo-button:hover .photo-action{background:#fff}
+.photo-action .icon{width:15px;height:15px}
+.gift-content{display:flex;flex-direction:column;justify-content:center;padding:32px 37px}
+.set-index{color:var(--gold-text);font-size:9px;font-weight:700;letter-spacing:.14em}
+.gift-description{min-height:62px;margin-top:17px;color:var(--gold-text);font-size:16px;line-height:1.8}
+.composition{margin-top:18px;padding-top:17px;border-top:1px solid var(--line)}
+.composition>span{color:var(--muted);font-size:9px;font-weight:600;letter-spacing:.07em}
+.gift-contents{min-height:51px;margin-top:8px;color:var(--ink);font-size:15px;font-weight:600;line-height:1.8}
+.gift-purchase{display:flex;align-items:center;flex-wrap:wrap;gap:15px;margin-top:19px}
+.price{display:inline-block;padding:9px 19px;border:1px solid var(--gold);border-radius:12px;color:var(--gold-light);background:var(--red);font-size:28px;font-weight:800;line-height:1.4;letter-spacing:-.04em;white-space:nowrap}
+.choose-gift{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:44px;padding:10px 0;color:var(--red);font-size:11px;font-weight:700}
+.choose-gift .icon{width:17px;height:17px}
+.choose-gift:hover{text-decoration:underline;text-underline-offset:5px}
+.gift-small-note{margin-top:13px;color:var(--muted);font-size:9px}
+.price-note{margin-top:25px;color:var(--muted);font-size:10px;text-align:center}
+
+/* Occasions and product facts */
+.choice-section{background:repeating-linear-gradient(90deg,rgba(255,239,183,.09) 0,rgba(255,239,183,.09) 2px,transparent 2px,transparent 7px),var(--gold)}
+.choice-section .overline,.choice-section .section-heading>p:last-child{color:#593800}
+.choice-section .ornamental-rule{color:var(--cream)}
+.choice-section .ornamental-rule:before,.choice-section .ornamental-rule:after{background:var(--cream)}
+.occasion-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.occasion-card{display:flex;flex-direction:column;min-width:0;padding:28px 25px 23px;border:2px solid var(--gold-light);border-radius:19px;background:var(--cream);box-shadow:5px 5px 0 rgba(128,79,5,.13);transition:transform .2s}
+.occasion-card:hover{transform:translateY(-3px)}
+.occasion-card>span:first-child{color:var(--gold-text);font-size:9px;font-weight:600;letter-spacing:.1em}
+.occasion-card h3{margin:12px 0 16px;color:var(--red);font-size:23px;font-weight:800;line-height:1.3;letter-spacing:-.035em}
+.occasion-card p{flex:1;margin-bottom:25px;color:var(--gold-text);font-size:12px;line-height:1.9}
+.occasion-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:15px;border-top:1px solid var(--line);color:var(--red);font-size:9px;font-weight:700}
+.occasion-link .icon{width:17px;height:17px}
+.details-section{background:var(--paper)}
+.details-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.detail-card{overflow:hidden;border:2px solid #d7b66b;border-radius:19px;background:var(--gold-light)}
+.detail-card>div{padding:15px 12px 14px;text-align:center}
+.detail-card small{display:block;color:var(--gold-text);font-size:9px;font-weight:600;letter-spacing:.1em}
+.detail-card h3{margin-top:4px;color:var(--red);font-size:18px;font-weight:800;line-height:1.5}
+.detail-card p{min-height:160px;margin:0 4px 4px;padding:22px 17px;border-radius:15px;background:#fff;color:var(--gold-text);font-size:12px;line-height:1.9}
+
+/* Consultation forms */
+.consultation{position:relative;overflow:hidden;border-top:1px solid var(--line);background:var(--cream)}
+.consultation-layout{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:70px}
+.contact-copy h2{margin:17px 0;font-size:clamp(36px,3.9vw,54px);line-height:1.16;letter-spacing:-.055em}
+.contact-copy .ornamental-rule{width:230px;margin:20px 0}
+.contact-copy>p:not(.overline){max-width:390px;color:var(--gold-text);font-size:13px;line-height:1.9}
+.contact-phone{display:inline-block;margin-top:28px;color:var(--red);font-size:28px;font-weight:800;letter-spacing:-.04em}
+.contact-phone small{display:block;margin-bottom:5px;color:var(--gold-text);font-size:9px;font-weight:600;letter-spacing:.13em}
+.contact-garlic{position:absolute;bottom:-40px;left:max(-130px,calc(50% - 780px));width:285px;opacity:.35;transform:rotate(-19deg);pointer-events:none}
+.contact-form-panel{overflow:hidden;border:3px solid var(--red);border-radius:23px;background:var(--paper)}
+.form-heading{padding:21px 25px;background:var(--red);color:var(--cream);text-align:center}
+.form-heading p{color:var(--gold-light);font-size:9px;font-weight:600;letter-spacing:.13em}
+.form-heading h3{margin-top:7px;color:var(--cream);font-size:20px;font-weight:800;line-height:1.4}
+.main-form-body{padding:27px}
+#contact-form{display:grid;grid-template-columns:1fr 1fr;column-gap:17px}
+.field{display:flex;flex-direction:column;min-width:0;gap:7px;margin-bottom:17px}
+.field label{color:var(--ink);font-size:10px;font-weight:600}
+.field label>span{color:var(--red)}
+.field label .optional{color:var(--muted);font-weight:400;font-size:9px}
+.field input,.field select,.field textarea{min-width:0;width:100%;min-height:45px;padding:11px 12px;border:1px solid #d8bd80;border-radius:8px;background:#fff;color:var(--ink);font-size:11px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);outline:2px solid rgba(172,8,14,.14);outline-offset:1px}
+.field input[aria-invalid='true']{border-color:var(--red)}
+.field textarea{min-height:88px;resize:vertical;line-height:1.7}
+.field-full{grid-column:1/-1}
+.form-submit{width:100%}
+.form-note{margin-top:12px;color:var(--muted);font-size:9px;line-height:1.8;text-align:center}
+.form-feedback{margin-top:17px;padding:15px;border:1px solid var(--line);border-radius:9px;background:var(--cream);color:var(--ink);font-size:11px;overflow-wrap:anywhere}
+.form-feedback strong{display:block;margin-bottom:7px;color:var(--red)}
+.form-feedback.error{border-color:#cf777b;background:#fff1f0;color:#941017}
+.request-summary{margin-block:12px;padding:12px;border:1px solid var(--line);border-radius:5px;color:var(--ink);background:#fff;font:13px/1.8 var(--font-body);white-space:pre-wrap;overflow-wrap:anywhere}
+.copy-request{min-height:44px;padding:10px 16px;border:0;border-radius:999px;color:var(--cream);background:var(--red);font-size:11px;font-weight:600}
+.copy-request:hover{background:var(--red-hover)}
+
+/* FAQ/footer */
+.faq-section{padding-block:62px;border-top:1px solid var(--line);background:var(--paper)}
+.faq-layout{display:grid;grid-template-columns:.7fr 1.3fr;gap:90px}
+.faq-layout h2{margin-top:9px;font-size:29px}
+.faq-list details{border-bottom:1px solid var(--line)}
+.faq-list details:first-child{border-top:1px solid var(--line)}
+.faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:20px;color:var(--red);font-size:12px;font-weight:600;list-style:none}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary>span{font-size:23px;line-height:1;font-weight:400}
+.faq-list details[open] summary>span{transform:rotate(45deg)}
+.faq-list details p{padding-bottom:20px;color:var(--muted);font-size:11px;line-height:1.9}
+.site-footer{padding:35px 0 20px;color:var(--cream);background:var(--red);border-top:5px solid var(--gold)}
+.footer-top{display:grid;grid-template-columns:1fr 1fr auto;align-items:center;gap:40px;padding-bottom:27px}
+.footer-brand img{width:57px;padding:5px;border-radius:5px;background:var(--cream)}
+.footer-brand>span{color:var(--gold-light);font-size:23px}
+.footer-brand small{color:var(--cream);font-size:8px;letter-spacing:.1em}
+.footer-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:17px;font-size:10px}
+.footer-phone{color:var(--gold-light);font-size:25px;font-weight:700;text-align:right;letter-spacing:-.035em}
+.footer-phone small{display:block;margin-bottom:5px;color:var(--cream);font-size:8px;font-weight:400;letter-spacing:.1em}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:17px;border-top:1px solid rgba(255,233,154,.4);font-size:9px}
+.site-footer a:focus-visible{outline-color:var(--gold-light)}
+.mobile-bar{display:none}
+
+/* Product dialog */
+.product-dialog{width:min(930px,calc(100% - 40px));max-height:calc(100dvh - 40px);padding:0;border:2px solid var(--gold);border-radius:23px;background:var(--paper);color:var(--ink);overflow:auto}
+.product-dialog::backdrop{background:rgba(59,25,7,.65);backdrop-filter:blur(4px)}
+.dialog-close{position:absolute;top:10px;right:10px;z-index:2;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--gold);border-radius:50%;color:var(--red);background:var(--cream)}
+.dialog-layout{display:grid;grid-template-columns:1.1fr .9fr;align-items:center}
+.dialog-photo{padding:24px}
+.dialog-photo .product-photo{border:2px solid var(--gold);border-radius:15px}
+.dialog-copy{padding:48px 28px 30px}
+.dialog-copy h2{margin:12px 0 25px;text-transform:uppercase;font-size:31px}
+.dialog-label{color:var(--gold-text);font-size:9px;font-weight:600;letter-spacing:.05em}
+.dialog-copy ul{padding-left:17px;color:var(--gold-text);font-size:12px;line-height:1.9}
+.dialog-copy .price{margin:20px 0;font-size:25px}
+.dialog-note{margin-top:13px;color:var(--muted);font-size:9px}
+
+
+/* Responsive layouts */
+@media(min-width:1700px){.hero-ornament-left{width:285px}
+.hero-ornament-right{width:280px}
+}
+
+@media(max-width:1180px){
+.hero-layout{gap:26px}
+.hero-ornament{width:200px;opacity:.75}
+.hero-ornament-left{left:-100px}
+.hero-ornament-right{right:-100px}
+.campaign-heading h1{font-size:61px}
+.hero-side-title{padding-left:12px;font-size:14px}
+.campaign-heading{grid-template-columns:1.8fr .8fr}
+.feature-heading>span{font-size:11px}
+.feature-heading small{font-size:10px}
+.hero-consultation{border-width:3px}
+.quick-form-heading h2{font-size:29px}
+.gold-strip-inner>div{padding-inline:20px}
+.gold-strip strong{font-size:12px}
+.gift-content{padding:27px 30px}
+.gift-title h3{font-size:31px}
+.gift-description{font-size:15px}
+.gift-contents{font-size:14px}
+.price{padding-inline:16px;font-size:26px}
+.consultation-layout{gap:45px}
+
+}
+
+@media(max-width:960px){
+.container{width:calc(100% - 48px)}
+.brand>span{font-size:18px}
+.brand small{font-size:6px}
+.site-nav{gap:18px}
+.site-nav a{font-size:10px}
+.header-phone{gap:7px;padding-inline:12px;font-size:11px}
+.hero-layout{grid-template-columns:1.55fr 1fr;gap:22px}
+.campaign-heading h1{font-size:53px}
+.hero-side-title{font-size:12px;line-height:1.7}
+.hero-side-title b{font-size:8px}
+.hero-tagline{font-size:8px}
+.campaign-heading .overline{font-size:8px}
+.hero-feature-grid{gap:12px}
+.feature-heading{padding:14px 6px 12px}
+.feature-heading>span{font-size:10px}
+.feature-heading small{font-size:9px}
+.feature-footer{padding:11px 12px;font-size:16px}
+.quick-form-heading{padding:18px 14px}
+.quick-form-heading h2{font-size:27px}
+.quick-form-body{padding:17px 13px 15px}
+.hero-consultation .field input,.hero-consultation .field select{font-size:10px}
+.hero-consultation .button{font-size:10px;gap:9px}
+.gift-card{grid-template-columns:1.05fr .95fr}
+.gift-title{min-height:97px;padding:16px 10px}
+.gift-title h3{font-size:28px}
+.gift-title>span{font-size:9px}
+.gift-content{padding:25px}
+.gift-description{font-size:14px;min-height:0}
+.gift-contents{font-size:13px;min-height:0}
+.gift-purchase{gap:8px 17px;margin-top:14px}
+.price{font-size:24px;padding:8px 14px}
+.choose-gift{font-size:10px}
+.composition{margin-top:15px;padding-top:14px}
+.occasion-grid{gap:17px}
+.occasion-card{padding:25px 20px 20px}
+.occasion-card h3{font-size:21px}
+.occasion-link{font-size:8px}
+.details-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.detail-card p{min-height:120px;font-size:13px}
+.consultation-layout{grid-template-columns:.9fr 1.1fr;gap:35px}
+.contact-copy h2{font-size:41px}
+.main-form-body{padding:22px}
+#contact-form{grid-template-columns:1fr}
+.form-heading h3{font-size:18px}
+.faq-layout{gap:50px}
+.footer-top{gap:30px}
+.footer-links{gap:12px;font-size:9px}
+.footer-phone{font-size:21px}
+
+}
+
+@media(max-width:820px){
+html{scroll-padding-top:90px}
+.header-inner{min-height:72px;gap:18px}
+.brand img{width:43px}
+.header-phone{margin-left:auto}
+.menu-toggle{display:inline-flex}
+.site-nav{position:absolute;top:72px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;padding:16px 24px 22px;border-bottom:2px solid var(--gold);background:var(--cream);box-shadow:0 12px 22px rgba(101,51,6,.1)}
+.site-nav.open{display:flex}
+.site-nav a{padding-block:14px;font-size:13px}
+.hero-layout{grid-template-columns:1fr;max-width:650px;gap:32px;padding-block:35px 44px}
+.campaign-heading{max-width:550px;margin-bottom:28px}
+.campaign-heading h1{font-size:65px}
+.hero-side-title{font-size:15px}
+.hero-side-title b{font-size:9px}
+.hero-tagline{font-size:10px}
+.campaign-heading .overline{font-size:9px}
+.hero-feature-grid{gap:18px}
+.feature-heading>span{font-size:12px}
+.feature-heading small{font-size:11px}
+.feature-footer{font-size:19px}
+.hero-consultation{width:100%;max-width:480px;justify-self:center}
+.quick-form-heading h2{font-size:27px}
+.quick-form-heading h2 br{display:none}
+.quick-form-heading>span{font-size:11px}
+.quick-form-body{padding:20px 22px}
+.hero-consultation .field input,.hero-consultation .field select{font-size:13px;min-height:46px}
+.hero-consultation .button{font-size:12px}
+.hero-ornament-left{width:190px;left:-75px;bottom:27px;opacity:.6}
+.hero-ornament-right{width:185px;right:-75px;opacity:.6}
+.gold-strip-inner{grid-template-columns:1fr 1fr;padding-block:23px;gap:22px 0}
+.gold-strip-inner>div{padding-inline:22px}
+.gold-strip-inner>div:nth-child(odd){padding-left:0}
+.gold-strip-inner>div:nth-child(even){border-right:0}
+.gold-strip strong{font-size:14px}
+.gold-strip span{font-size:10px}
+.section{padding-block:58px}
+.collection-section{padding-top:0}
+h2{font-size:26px}
+.gift-card{grid-template-columns:1fr;max-width:660px;width:100%;margin-inline:auto}
+.gift-image-panel{padding:0 7px 7px}
+.gift-title{min-height:94px}
+.gift-title h3{font-size:31px}
+.gift-card .product-photo{aspect-ratio:1.72}
+.gift-content{padding:28px 30px 25px}
+.gift-description{font-size:15px;margin-top:13px}
+.gift-contents{font-size:15px}
+.gift-purchase{margin-top:18px;justify-content:space-between;gap:20px}
+.price{font-size:27px}
+.choose-gift{font-size:12px}
+.gift-small-note{margin-top:11px}
+.occasion-grid{grid-template-columns:1fr;gap:18px}
+.occasion-card{padding:25px}
+.occasion-card h3{font-size:24px}
+.occasion-card p{margin-bottom:20px;font-size:13px}
+.occasion-link{font-size:10px}
+.consultation-layout{grid-template-columns:1fr;gap:35px;max-width:650px}
+.contact-copy{text-align:center}
+.contact-copy h2{font-size:43px}
+.contact-copy .ornamental-rule{margin-inline:auto}
+.contact-copy>p:not(.overline){max-width:500px;margin-inline:auto}
+.contact-copy .overline{font-size:8px}
+.contact-copy h2 br:nth-child(2){display:none}
+.contact-phone{margin-top:20px;font-size:29px}
+.contact-garlic{width:230px;opacity:.24}
+.main-form-body{padding:27px}
+#contact-form{grid-template-columns:1fr 1fr}
+.form-heading h3{font-size:21px}
+.faq-layout{grid-template-columns:1fr;gap:25px}
+.faq-layout h2{font-size:27px}
+.faq-layout h2 br{display:none}
+.footer-top{grid-template-columns:1fr auto;gap:25px}
+.footer-links{grid-row:2;grid-column:1/-1;justify-content:flex-start;font-size:11px;gap:22px}
+.dialog-layout{grid-template-columns:1fr}
+.dialog-photo{padding:22px 22px 0}
+.dialog-copy{padding:24px 28px 30px}
+.dialog-copy h2{margin:10px 0 20px;font-size:29px}
+
+}
+
+@media(max-width:560px){
+html{scroll-padding-top:80px}
+.container{width:calc(100% - 32px)}
+.header-inner{min-height:66px;gap:14px}
+.brand{gap:10px}
+.brand img{width:38px}
+.brand>span{font-size:18px}
+.brand small{font-size:6px;max-width:190px}
+.header-phone{display:none}
+.site-nav{top:66px}
+.hero-layout{gap:28px;padding-block:30px 33px}
+.campaign-heading{grid-template-columns:1.8fr .85fr;margin-bottom:23px}
+.campaign-heading .overline{font-size:7px;letter-spacing:.08em;margin-bottom:13px}
+.campaign-heading h1{font-size:clamp(37px,10.8vw,60px);line-height:1.09}
+.hero-side-title{padding-left:11px;font-size:9px;line-height:1.8;letter-spacing:.08em}
+.hero-side-title b{font-size:6px;margin-top:4px;letter-spacing:.02em}
+.hero-tagline{margin-top:14px;font-size:7px;line-height:1.7;letter-spacing:0}
+.campaign-heading .ornamental-rule{font-size:20px;margin-top:10px}
+.hero-feature-grid{gap:11px}
+.hero-feature{border-width:2px;border-radius:13px}
+.feature-heading{padding:12px 5px 10px}
+.feature-heading>span{min-height:32px;font-size:9px;line-height:1.6}
+.feature-heading small{margin-top:5px;font-size:8px}
+.hero-feature .product-photo{border-width:1px;border-radius:11px}
+.feature-footer{padding:10px 8px;font-size:14px}
+.feature-footer .icon{width:15px;height:15px}
+.hero-consultation{max-width:420px;border-radius:19px}
+.quick-form-heading{padding:18px 18px 20px}
+.quick-form-heading>p{font-size:11px;margin-bottom:9px}
+.quick-form-heading h2{font-size:25px}
+.quick-form-body{padding:18px}
+.hero-consultation .field input,.hero-consultation .field select{min-height:46px;font-size:16px}
+.hero-consultation .field input::placeholder{font-size:12px}
+.hero-consultation .field select{font-size:12px}
+.hero-consultation .field select:focus{font-size:16px}
+.hero-consultation .form-note{font-size:9px}
+.hero-consultation .button{font-size:11px}
+.hero-ornament-left{width:120px;left:-54px;bottom:14px;opacity:.65}
+.hero-ornament-right{width:120px;right:-54px;bottom:14px;opacity:.65}
+.hero-hill{width:350px;height:110px;bottom:-45px}
+.stage-ribbon{height:20px;background-size:35px auto}
+.gold-strip-inner{padding-block:22px;gap:20px 0}
+.gold-strip-inner>div{padding-inline:17px}
+.gold-strip strong{font-size:11px}
+.gold-strip span{font-size:8px}
+.section{padding-block:46px}
+.section-heading{margin-bottom:27px}
+.section-heading h2{margin-top:8px;font-size:23px;line-height:1.45;letter-spacing:-.035em}
+.section-heading .overline{font-size:7px}
+.section-heading>p:last-child:not(.overline){font-size:11px;line-height:1.8}
+.ornamental-rule{width:170px;gap:12px;font-size:20px}
+.collection-section{padding-top:0}
+.gift-grid{gap:25px}
+.gift-card{border-radius:19px}
+.gift-image-panel{padding:0 5px 5px}
+.gift-title{min-height:90px;padding:15px 8px}
+.gift-title>span{font-size:8px;letter-spacing:.13em}
+.gift-title>span:before,.gift-title>span:after{width:25px}
+.gift-title h3{font-size:27px;margin-top:7px}
+.photo-button{border-width:1px;border-radius:14px}
+.photo-action{right:9px;bottom:9px;padding:7px 10px;font-size:8px}
+.photo-action .icon{width:13px;height:13px}
+.gift-content{padding:24px 22px 22px}
+.set-index{font-size:8px}
+.gift-description{margin-top:12px;font-size:13px;line-height:1.85}
+.composition{margin-top:16px;padding-top:15px}
+.composition>span{font-size:8px}
+.gift-contents{font-size:13px}
+.gift-purchase{gap:12px;margin-top:18px}
+.price{font-size:24px;padding:9px 14px;border-radius:10px}
+.choose-gift{font-size:10px;gap:8px}
+.gift-small-note{font-size:8px}
+.price-note{font-size:9px;line-height:1.8;margin-top:20px}
+.occasion-card{padding:25px 22px}
+.occasion-card h3{font-size:23px}
+.occasion-card p{font-size:12px}
+.occasion-link{font-size:9px}
+.details-grid{grid-template-columns:1fr 1fr;gap:13px}
+.detail-card{border-radius:16px}
+.detail-card>div{padding:13px 8px}
+.detail-card small{font-size:7px}
+.detail-card h3{font-size:13px}
+.detail-card p{min-height:170px;padding:17px 12px;font-size:10px;line-height:1.9}
+.contact-copy h2{font-size:39px}
+.contact-copy>p:not(.overline){font-size:12px}
+.contact-copy .overline{font-size:7px}
+.contact-phone{font-size:27px}
+.contact-form-panel{border-width:2px;border-radius:19px}
+.form-heading{padding:20px 16px}
+.form-heading h3{font-size:17px}
+.main-form-body{padding:23px 18px}
+#contact-form{grid-template-columns:1fr}
+.field label{font-size:11px}
+.field input,.field select,.field textarea{min-height:46px;font-size:16px}
+.field input::placeholder,.field textarea::placeholder{font-size:12px}
+.form-note{font-size:9px}
+.faq-section{padding-block:45px}
+.faq-layout{gap:24px}
+.faq-layout h2{font-size:25px}
+.faq-layout .overline{font-size:8px}
+.faq-list summary{font-size:11px}
+.faq-list details p{font-size:11px}
+.site-footer{padding-block:32px 89px}
+.footer-top{grid-template-columns:1fr;gap:23px;padding-bottom:24px}
+.footer-brand img{width:53px}
+.footer-links{grid-row:auto;grid-column:auto;justify-content:flex-start;gap:19px;font-size:10px}
+.footer-phone{text-align:left;font-size:25px}
+.footer-bottom{font-size:9px}
+.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:.85fr 1.15fr;gap:8px;padding:9px 11px max(9px,env(safe-area-inset-bottom));border-top:1px solid var(--gold);background:var(--cream)}
+.mobile-bar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:7px;border:1px solid var(--gold);border-radius:999px;color:var(--red);font-size:9px;font-weight:700}
+.mobile-bar a:last-child{border-color:var(--red);color:var(--cream);background:var(--red)}
+.mobile-bar .icon{width:15px;height:15px}
+.product-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 28px);border-radius:18px}
+.dialog-photo{padding:16px 16px 0}
+.dialog-copy{padding:22px}
+.dialog-copy h2{font-size:27px}
+.dialog-copy .button{width:100%;font-size:11px}
+.dialog-copy .price{font-size:25px}
+.dialog-close{top:7px;right:7px;width:36px;height:36px}
+
+}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+*,*:before,*:after{transition:none!important;animation:none!important}
+}
+
+
+/* Keep required field names visible after typing. */
+.hero-consultation .field:has(input) label{position:static;width:auto;height:auto;clip-path:none;overflow:visible;white-space:normal;font-size:10px}
+.hero-consultation .form-note{font-size:10px}
+.quick-call{font-size:11px}
+.gold-strip span{font-size:10px}
+@media(max-width:560px){.hero-consultation .field:has(input) label{font-size:11px}.hero-consultation .form-note{font-size:10px}.gold-strip span{font-size:9px}}
+
+/* Original and promotional prices use one line through the original amount. */
+.original-price{color:var(--muted);font-size:15px;font-weight:600;line-height:1.4;text-decoration-line:line-through;text-decoration-thickness:1px}
+.gift-prices{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:4px;min-height:95px}
+.price-caption{color:var(--gold-text);font-size:8px;font-weight:700;line-height:1.4;letter-spacing:.06em}
+.feature-footer{min-height:76px}
+.feature-prices{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.feature-prices .original-price{font-size:12px}
+.feature-sale{color:var(--red);font-size:19px;font-weight:800;line-height:1.4}
+.dialog-prices{margin:20px 0}
+.dialog-prices .gift-prices{min-height:0}
+.dialog-copy .dialog-prices .price{margin:0}
+/* Keep comparable panels balanced after adding the original-price row. */
+.gift-card .gift-content{padding-block:24px}
+.gift-card .gift-description{min-height:55px}
+.gift-card .gift-contents{min-height:33px}
+@media(max-width:820px){
+  .gift-card .gift-description,.gift-card .gift-contents{min-height:0}
+}
+@media(max-width:560px){
+  .feature-prices .original-price{font-size:10px}
+  .feature-sale{font-size:14px}
+  .feature-footer{min-height:70px}
+  .gift-prices{min-height:90px}
+  .original-price{font-size:14px}
+  .gift-card .gift-purchase{align-items:flex-end}
+}
+
+/* Compact hierarchy: smaller display blocks, readable text and stable touch targets. */
+.container{width:min(var(--content-width),calc(100% - 64px))}
+h1,h2,.gift-title h3,.price,.feature-sale,.ribbon-price strong,.contact-phone,.footer-phone{font-family:var(--font-display);font-weight:600}
+h2{font-size:26px;line-height:1.3;letter-spacing:-.02em}
+.section{padding-block:56px}
+.collection-section{padding-top:0}
+.overline{font-size:11px;letter-spacing:.08em}
+.section-heading{margin-bottom:28px}
+.section-heading>p:last-child:not(.overline){font-size:14px;line-height:1.75}
+.header-inner{min-height:70px}
+.brand img{width:42px}
+.brand>span{font-size:18px;letter-spacing:.02em}
+.brand small{font-size:8px}
+.site-nav{gap:24px}
+.site-nav a{font-size:13px}
+.header-phone{font-size:13px;padding:9px 14px}
+.hero-layout{gap:28px;padding-block:32px 40px}
+.campaign-heading{max-width:550px;margin-bottom:22px;grid-template-columns:1.7fr .9fr}
+.campaign-heading h1{font-size:clamp(44px,4vw,56px);line-height:1.08;letter-spacing:-.045em;font-weight:600}
+.campaign-heading .overline{font-size:10px;margin-bottom:10px;letter-spacing:.09em}
+.hero-side-title{font-size:14px;letter-spacing:.06em;padding-left:16px}
+.hero-side-title b{font-size:10px;letter-spacing:.01em}
+.hero-tagline{font-size:11px;line-height:1.6;letter-spacing:.01em;margin-top:14px}
+.campaign-heading .ornamental-rule{font-size:19px;margin-top:9px}
+.hero-feature{border-width:2px;border-radius:14px}
+.feature-heading{padding:11px 8px}
+.feature-heading>span{font-size:12px;font-weight:700}
+.feature-heading small{font-size:11px}
+.feature-footer{min-height:66px;padding:9px 13px;font-size:18px;font-weight:700}
+.feature-sale{font-size:18px}
+.feature-prices .original-price{font-size:13px}
+.hero-consultation{border-width:2px;border-radius:18px}
+.quick-form-heading{padding:15px 18px 16px}
+.quick-form-heading>p{font-size:13px;margin-bottom:8px}
+.quick-form-heading h2{font-size:26px;font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.quick-form-heading>span{font-size:11px;margin-top:9px}
+.quick-form-body{padding:16px;border-radius:15px 15px 0 0}
+.hero-consultation .field{margin-bottom:10px}
+.hero-consultation .field:has(input) label{font-size:11px}
+.hero-consultation .field input,.hero-consultation .field select{font-size:13px;min-height:44px}
+.hero-consultation .button{font-size:12px;min-height:44px}
+.hero-consultation .form-note{font-size:11px;line-height:1.65}
+.quick-call{font-size:12px}
+.hero-ornament-left,.hero-ornament-right{width:205px}
+.stage-ribbon{height:20px}
+.gold-strip-inner{padding-block:21px}
+.gold-strip strong{font-size:14px;font-weight:700}
+.gold-strip span{font-size:11px;line-height:1.6}
+.gift-grid{gap:24px}
+.gift-card{border-width:1px;border-radius:18px}
+.gift-title{min-height:82px;padding:12px 16px}
+.gift-title>span{font-size:10px;letter-spacing:.1em}
+.gift-title h3{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-top:5px}
+.gift-card .gift-content{padding:20px 26px}
+.set-index{font-size:10px;letter-spacing:.09em}
+.gift-card .gift-description{font-size:14px;line-height:1.75;min-height:0;margin-top:10px}
+.composition{margin-top:12px;padding-top:12px}
+.composition>span{font-size:10px;line-height:1.5;letter-spacing:.04em}
+.gift-card .gift-contents{font-size:14px;line-height:1.7;min-height:0;margin-top:5px}
+.gift-purchase{margin-top:13px;gap:14px;align-items:flex-end}
+.gift-prices{min-height:86px;gap:3px}
+.price{font-size:24px;font-weight:600;line-height:1.25;padding:8px 16px;border-radius:10px;letter-spacing:-.03em}
+.original-price{font-size:14px}
+.price-caption{font-size:10px;letter-spacing:.03em;font-weight:600}
+.choose-gift{font-size:12px;min-height:44px}
+.gift-small-note{font-size:11px;line-height:1.6;margin-top:10px}
+.price-note{font-size:12px;line-height:1.75}
+.photo-action{font-size:11px;padding:7px 12px}
+.occasion-card{padding:23px 22px 20px;border-width:1px;border-radius:14px}
+.occasion-card>span:first-child{font-size:10px}
+.occasion-card h3{font-family:var(--font-display);font-size:23px;font-weight:600;margin-block:10px 12px}
+.occasion-card p{font-size:14px;line-height:1.75;margin-bottom:20px}
+.occasion-link{font-size:10px}
+.detail-card{border-width:1px;border-radius:14px}
+.detail-card small{font-size:10px}
+.detail-card h3{font-family:var(--font-display);font-size:18px;font-weight:600}
+.detail-card p{font-size:13px;line-height:1.75;min-height:136px;padding:18px 15px}
+.contact-copy h2{font-size:40px;line-height:1.15;letter-spacing:-.03em}
+.contact-copy>p:not(.overline){font-size:14px;line-height:1.8}
+.contact-phone{font-size:27px}
+.contact-phone small{font-family:var(--font-body);font-size:11px}
+.contact-form-panel{border-width:2px;border-radius:18px}
+.form-heading{padding:17px 20px}
+.form-heading p{font-size:10px}
+.form-heading h3{font-family:var(--font-display);font-size:21px;font-weight:600}
+.main-form-body{padding:23px}
+.field label{font-size:12px}
+.field label .optional{font-size:11px}
+.field input,.field select,.field textarea{font-size:14px;min-height:44px;line-height:1.5}
+.button{min-height:44px;font-size:12px;padding:11px 19px}
+.form-note{font-size:11px;line-height:1.65}
+.faq-section{padding-block:48px}
+.faq-layout h2{font-size:26px}
+.faq-list summary{font-size:14px;padding-block:18px}
+.faq-list details p{font-size:13px;line-height:1.8}
+.footer-links{font-size:12px}
+.footer-phone{font-size:25px}
+.footer-bottom{font-size:11px}
+.dialog-copy h2{font-size:29px}
+.dialog-copy ul{font-size:14px}
+.dialog-label{font-size:11px}
+.dialog-note{font-size:11px}
+.dialog-copy .price{font-size:25px}
+@media(max-width:960px){
+  .container{width:calc(100% - 48px)}
+  .campaign-heading h1{font-size:48px}
+  .hero-side-title{font-size:12px;padding-left:12px}
+  .hero-side-title b{font-size:9px}
+  .hero-tagline{font-size:10px}
+  .site-nav{gap:18px}
+  .site-nav a{font-size:12px}
+  .brand small{font-size:7px}
+  .feature-heading>span{font-size:11px}
+  .feature-heading small{font-size:10px}
+  .gift-card .gift-content{padding:20px 23px}
+  .gift-title h3{font-size:26px}
+}
+@media(max-width:820px){
+  .header-inner{min-height:68px}
+  .site-nav{top:68px}
+  .site-nav a{font-size:14px}
+  .hero-layout{gap:26px;padding-block:30px 34px;max-width:620px}
+  .campaign-heading h1{font-size:54px}
+  .campaign-heading{max-width:530px}
+  .hero-side-title{font-size:14px}
+  .hero-tagline{font-size:11px}
+  .quick-form-heading h2{font-size:26px}
+  .hero-consultation{max-width:440px}
+  .gold-strip-inner{gap:18px 0}
+  .section{padding-block:48px}
+  .collection-section{padding-top:0}
+  .gift-card{max-width:620px}
+  .gift-purchase{justify-content:space-between}
+  .main-form-body{padding:23px}
+  .contact-copy h2{font-size:37px}
+}
+@media(max-width:560px){
+  .container{width:calc(100% - 32px)}
+  .header-inner{min-height:62px}
+  .brand img{width:35px}
+  .brand>span{font-size:17px}
+  .brand small{font-size:7px;max-width:195px}
+  .site-nav{top:62px}
+  .hero-layout{padding-block:25px 29px;gap:24px}
+  .campaign-heading{margin-bottom:20px;grid-template-columns:1.7fr .9fr}
+  .campaign-heading h1{font-size:clamp(33px,9.4vw,46px)}
+  .campaign-heading .overline{font-size:9px;letter-spacing:.04em}
+  .hero-side-title{font-size:10px;padding-left:10px;letter-spacing:.035em}
+  .hero-side-title b{font-size:8px;line-height:1.5}
+  .hero-tagline{font-size:9px;letter-spacing:0;margin-top:11px}
+  .hero-feature-grid{gap:10px}
+  .feature-heading{padding:10px 6px}
+  .feature-heading>span{font-size:10px;min-height:30px;line-height:1.5}
+  .feature-heading small{font-size:10px;margin-top:3px}
+  .feature-footer{min-height:60px;padding:8px 9px;font-size:16px}
+  .feature-sale{font-size:16px}
+  .feature-prices .original-price{font-size:11px}
+  .hero-consultation{max-width:420px}
+  .quick-form-heading{padding:14px 16px}
+  .quick-form-heading h2{font-size:24px}
+  .quick-form-heading>p{font-size:13px}
+  .quick-form-heading>span{font-size:11px}
+  .quick-form-body{padding:16px}
+  .hero-consultation .field input,.hero-consultation .field select{font-size:16px;min-height:44px}
+  .hero-consultation .field input::placeholder{font-size:13px}
+  .hero-consultation .field:has(input) label{font-size:12px}
+  .hero-consultation .button{font-size:12px}
+  .hero-consultation .form-note{font-size:11px}
+  .hero-ornament-left,.hero-ornament-right{width:110px}
+  .stage-ribbon{height:16px}
+  .gold-strip-inner{padding-block:18px}
+  .gold-strip strong{font-size:12px}
+  .gold-strip span{font-size:10px}
+  .section{padding-block:40px}
+  .collection-section{padding-top:0}
+  .section-heading h2{font-size:23px;line-height:1.3}
+  .section-heading .overline{font-size:10px}
+  .section-heading>p:last-child:not(.overline){font-size:13px}
+  .gift-grid{gap:20px}
+  .gift-title{min-height:76px;padding:11px 10px}
+  .gift-title>span{font-size:10px}
+  .gift-title h3{font-size:26px}
+  .gift-card .gift-content{padding:20px}
+  .gift-card .gift-description,.gift-card .gift-contents{font-size:14px}
+  .photo-action{font-size:10px;right:8px;bottom:8px;padding:6px 10px}
+  .gift-prices{min-height:86px}
+  .price{font-size:23px;padding:8px 14px}
+  .original-price{font-size:14px}
+  .choose-gift{font-size:12px}
+  .gift-small-note{font-size:11px}
+  .price-note{font-size:11px}
+  .occasion-card p{font-size:14px}
+  .occasion-link{font-size:11px}
+  .detail-card h3{font-size:16px}
+  .detail-card small{font-size:10px}
+  .detail-card p{font-size:12px;min-height:172px;padding:15px 12px}
+  .contact-copy h2{font-size:34px}
+  .contact-copy .overline{font-size:10px}
+  .contact-copy>p:not(.overline){font-size:14px}
+  .form-heading h3{font-size:21px}
+  .field input,.field select,.field textarea{font-size:16px}
+  .field input::placeholder,.field textarea::placeholder{font-size:13px}
+  .faq-layout h2{font-size:24px}
+  .faq-list summary{font-size:13px}
+  .faq-list details p{font-size:13px}
+  .footer-links{font-size:12px}
+  .footer-bottom{font-size:11px}
+  .mobile-bar a{font-size:11px}
+}
+/* One-time entrance and scroll reveals, followed by small interaction feedback. */
+.motion-ready .reveal-ready{opacity:0;transform:translate3d(0,18px,0);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.65,.3,1);transition-delay:var(--reveal-delay,0ms)}
+.motion-ready .reveal-ready.is-visible{opacity:1;transform:none}
+.motion-ready .campaign-heading{animation:soft-entrance .65s both}
+.motion-ready .hero-feature{animation:soft-entrance .65s .1s both}
+.motion-ready .hero-feature:nth-child(2){animation-delay:.18s}
+.motion-ready .hero-consultation{animation:soft-entrance .65s .2s both}
+.motion-ready .hero-ornament img{animation:garlic-float 6s ease-in-out 2}
+.product-dialog[open]{animation:dialog-entrance .2s ease-out}
+.product-dialog[open]::backdrop{animation:backdrop-entrance .2s ease-out}
+@keyframes soft-entrance{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes garlic-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes dialog-entrance{from{opacity:0;transform:translateY(6px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes backdrop-entrance{from{opacity:0}to{opacity:1}}
+@media(hover:hover) and (pointer:fine){
+  .product-photo img{transition:scale .45s cubic-bezier(.2,.65,.3,1)}
+  .photo-button:hover .product-photo img,.hero-feature:hover .product-photo img{scale:1.018}
+  .button .icon,.choose-gift .icon{transition:transform .2s ease}
+  .button:hover .icon,.choose-gift:hover .icon{transform:translateX(3px)}
+  .button-red:hover{box-shadow:0 5px 14px rgba(172,8,14,.13)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .motion-ready .reveal-ready{opacity:1;transform:none}
+}
+
+.motion-ready .reveal-ready:focus-within{opacity:1;transform:none;transition-delay:0ms}
+
+/* Leave a small, consistent gap beneath the sticky header on anchor navigation. */
+html{scroll-padding-top:88px}
+@media(max-width:820px){html{scroll-padding-top:82px}}
+@media(max-width:560px){html{scroll-padding-top:74px}}
+@media print{.motion-ready .reveal-ready{opacity:1!important;transform:none!important}*,*:before,*:after{animation:none!important}}
+
+/* Six sets in two comparable rows; full information stays in the detail dialog. */
+.gift-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.gift-grid .gift-card{display:flex;flex-direction:column;width:100%;max-width:none;margin:0;border-radius:16px;box-shadow:0 6px 20px rgba(98,69,31,.035)}
+.gift-grid .gift-image-panel{padding:0 5px 5px}
+.gift-grid .gift-title{min-height:66px;padding:10px 12px}
+.gift-grid .gift-title>span{font-size:9px}
+.gift-grid .gift-title h3{font-size:25px;margin-top:3px}
+.gift-grid .photo-button{border-radius:11px}
+.gift-grid .photo-action{right:8px;bottom:8px;padding:5px 9px;font-size:10px;min-height:30px}
+.gift-grid .gift-content{flex:1;padding:16px 18px 18px;justify-content:flex-start}
+.gift-grid .composition{display:grid;gap:5px;margin:0;padding:0;border:0}
+.gift-grid .composition>span{font-size:9px;line-height:1.5;color:var(--muted)}
+.gift-grid .gift-contents{min-height:46px;margin:0;font-size:13px;line-height:1.75;font-weight:600}
+.gift-grid .gift-purchase{flex-wrap:nowrap;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #eee3cd}
+.gift-grid .gift-prices{min-height:55px;gap:3px;justify-content:flex-end}
+.gift-grid .price-caption{display:none}
+.gift-grid .original-price{font-size:12px;line-height:1.5;color:#8a7b64}
+.gift-grid .price{font-size:24px;background:none;color:var(--red);padding:0;border:0;border-radius:0;white-space:nowrap}
+.gift-grid .choose-gift{min-height:44px;flex-shrink:0;padding:8px 10px;gap:5px;border:1px solid var(--red);border-radius:8px;font-size:11px;background:var(--red);color:var(--white);text-decoration:none}
+.gift-grid .choose-gift .icon{width:15px;height:15px}
+.gift-grid .choose-gift:hover{background:var(--red-hover);border-color:var(--red-hover);color:var(--white)}
+.form-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.form-actions .button{width:100%;min-height:46px;padding:12px 10px;min-width:0;gap:7px;font-size:13px}
+.form-actions .button-red{color:var(--white)}
+.form-actions .button-zalo{border:1px solid var(--red);background:var(--white);color:var(--red);animation:none}
+.form-actions .button-zalo:hover{background:#fff1e4}
+.order-label{display:inline-block;transform-origin:center;animation:order-pulse 1.6s ease-in-out infinite}
+.order-button:hover .order-label,.order-button:focus-visible .order-label,.order-button:disabled .order-label{animation-play-state:paused}
+.form-submit:disabled{cursor:not-allowed;opacity:.7}
+.request-form[aria-busy=true] .form-submit:disabled{cursor:wait}
+.request-form[aria-busy=true] .order-label{animation:none}
+.form-feedback.success{border-color:#b3c49d;background:#f5f9ef;color:#304c24}
+.form-feedback:focus{outline:2px solid var(--gold);outline-offset:3px}
+.order-bridge{position:fixed;width:1px;height:1px;left:-100px;bottom:0;border:0;pointer-events:none}
+@keyframes order-pulse{0%,70%,100%{transform:scale(1)}35%{transform:scale(1.08)}}
+@media(min-width:561px) and (max-width:960px){
+  .gift-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+}
+@media(max-width:560px){
+  .gift-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+  .gift-grid .gift-title{min-height:62px}
+  .gift-grid .gift-title h3{font-size:25px}
+  .gift-grid .gift-content{padding:14px 16px 16px}
+  .gift-grid .gift-contents{min-height:0;font-size:14px}
+  .gift-grid .gift-purchase{margin-top:12px;padding-top:12px}
+  .gift-grid .price{font-size:26px}
+  .gift-grid .choose-gift{font-size:12px;padding-inline:12px}
+  .hero-consultation .form-actions .button{font-size:12px;padding-inline:9px}
+  .form-actions{gap:8px}
+}
+@media(min-width:360px) and (max-width:560px){
+  .gift-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .gift-grid .gift-card{border-radius:12px}
+  .gift-grid .gift-image-panel{padding:0 3px 3px}
+  .gift-grid .gift-title{min-height:58px;padding:8px 4px}
+  .gift-grid .gift-title>span{font-size:8px;letter-spacing:.02em;gap:4px;white-space:nowrap}
+  .gift-grid .gift-title>span:before,.gift-grid .gift-title>span:after{width:12px}
+  .gift-grid .gift-title h3{font-size:18px;letter-spacing:-.03em;line-height:1.25}
+  .gift-grid .photo-button{border-width:1px;border-radius:8px}
+  .gift-grid .photo-action{width:28px;height:28px;min-height:28px;right:5px;bottom:5px;justify-content:center;padding:0;font-size:0;gap:0}
+  .gift-grid .photo-action .icon{width:14px;height:14px}
+  .gift-grid .gift-content{padding:12px 10px}
+  .gift-grid .composition{gap:4px}
+  .gift-grid .composition>span{font-size:8px;letter-spacing:0}
+  .gift-grid .gift-contents{font-size:12px;line-height:1.7;min-height:62px}
+  .gift-grid .gift-purchase{flex-direction:column;align-items:stretch;margin-top:9px;padding-top:9px;gap:9px}
+  .gift-grid .gift-prices{min-height:49px}
+  .gift-grid .price{font-size:22px}
+  .gift-grid .original-price{font-size:11px}
+  .gift-grid .choose-gift{width:100%;font-size:11px;padding:8px 5px}
+}
+@media(prefers-reduced-motion:reduce){.order-label{animation:none}}
+
+/* Balanced type hierarchy and a consistent, tighter vertical rhythm. */
+:root{--ink:#493a2c;--muted:#76685b}
+body{line-height:1.65}
+.overline{font-size:11px;font-weight:700;line-height:1.4;letter-spacing:.045em}
+.section{padding-block:48px}
+.collection-section{padding-top:0}
+.section-heading{margin-bottom:26px}
+.section-heading h2{font-size:29px;font-weight:700;line-height:1.22;letter-spacing:-.025em;margin-top:7px}
+.section-heading>p:last-child:not(.overline){font-size:14px;line-height:1.6;margin-top:6px}
+.ornamental-rule{width:160px;margin-block:10px;font-size:19px;gap:10px}
+.site-nav a{font-size:13px;font-weight:700}
+.brand small{font-size:8px;letter-spacing:0;line-height:1.4}
+.hero-layout{gap:28px;padding-block:30px 34px;align-items:center}
+.campaign-heading{max-width:none;margin-bottom:20px}
+.campaign-heading .overline{font-size:11px;letter-spacing:.03em;margin-bottom:10px}
+.campaign-heading h1{font-size:56px;font-weight:700;line-height:1.03;letter-spacing:-.045em}
+.hero-side-title{font-size:14px;line-height:1.5;letter-spacing:.025em;padding-left:16px}
+.hero-side-title b{font-size:10px;letter-spacing:0;margin-top:4px}
+.hero-tagline{font-size:11px;font-weight:700;letter-spacing:0;margin-top:14px}
+.campaign-heading .ornamental-rule{margin-top:12px}
+.feature-heading{padding:12px 9px}
+.feature-heading>span{font-size:13px;font-weight:800}
+.feature-heading small{font-size:12px;line-height:1.4;margin-top:3px}
+.feature-footer{min-height:62px;padding:10px 14px;font-size:21px}
+.feature-sale{font-size:21px;font-weight:700}
+.feature-prices .original-price{font-size:12px}
+.quick-form-heading{padding:16px 14px}
+.quick-form-heading>p{font-size:12px;line-height:1.4;margin-bottom:5px}
+.quick-form-heading h2{font-family:var(--font-body);font-size:23px;font-weight:800;line-height:1.25;letter-spacing:-.025em;color:var(--white)}
+.quick-form-body{padding:16px;border-radius:14px 14px 0 0}
+#quick-form{display:grid;grid-template-columns:minmax(0,2fr) minmax(80px,1fr);column-gap:10px}
+.field{gap:5px;margin-bottom:12px}
+.field label{font-size:13px;font-weight:700;line-height:1.4;letter-spacing:0}
+.field label .optional{font-size:11px}
+.field input,.field select,.field textarea{min-height:46px;padding:10px 12px;font-size:15px;line-height:1.5;border-color:#d9c6a1;border-radius:9px}
+.field textarea{height:80px;min-height:80px;line-height:1.55}
+.hero-consultation .field{gap:5px;margin-bottom:12px}
+.hero-consultation .field label,.hero-consultation .field:has(input) label{position:static;width:auto;height:auto;clip-path:none;overflow:visible;white-space:normal;font-size:12px;line-height:1.4}
+.hero-consultation .field input,.hero-consultation .field select{font-size:14px;min-height:46px;padding:10px 11px;border-radius:9px}
+.quick-call{font-size:13px;font-weight:700;margin-top:10px;line-height:1.5}
+.form-actions{gap:8px}
+.form-actions .order-button,.hero-consultation .form-actions .order-button{min-height:56px;font-family:var(--font-body);font-size:18px;font-weight:800;line-height:1.2;letter-spacing:-.015em;padding:14px 16px;border-radius:12px;gap:10px;box-shadow:0 4px 10px rgba(172,8,14,.12)}
+.form-actions .order-button .icon{width:21px;height:21px;stroke-width:2}
+.form-actions .button-zalo,.hero-consultation .form-actions .button-zalo{min-height:46px;font-size:14px;font-weight:700;line-height:1.3;letter-spacing:0;border-radius:12px;padding:12px 16px;animation:none}
+.order-label{font-weight:800;letter-spacing:0}
+.form-note,.hero-consultation .form-note{font-size:12px;line-height:1.5;margin-top:10px;color:var(--muted)}
+.form-feedback{font-size:13px;line-height:1.55;margin-top:12px;padding:12px}
+.gold-strip-inner{padding-block:20px}
+.gold-strip strong{font-size:15px;font-weight:800;line-height:1.3}
+.gold-strip span{font-size:12px;line-height:1.4;margin-top:5px}
+.gift-grid{gap:18px}
+.gift-grid .gift-title{min-height:64px;padding:9px 12px}
+.gift-grid .gift-title>span{font-size:10px;line-height:1.4;letter-spacing:.025em}
+.gift-grid .gift-title h3{font-size:25px;font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-top:4px}
+.gift-grid .gift-content{padding:14px 16px 16px}
+.gift-grid .composition>span{font-size:10px;font-weight:700;line-height:1.4;letter-spacing:0}
+.gift-grid .gift-contents{font-size:14px;line-height:1.55;font-weight:600;min-height:44px}
+.gift-grid .gift-purchase{margin-top:10px;padding-top:10px;gap:6px}
+.gift-grid .price{font-size:25px;font-weight:700;line-height:1.2;letter-spacing:-.035em}
+.gift-grid .choose-gift{font-size:12px;font-weight:800;padding-inline:8px;gap:5px}
+.price-note{font-size:12px;line-height:1.5;margin-top:18px}
+.occasion-card{padding:20px}
+.occasion-card h3{font-size:24px;font-weight:700;margin-block:8px 10px}
+.occasion-card p{font-size:14px;line-height:1.65;margin-bottom:16px}
+.occasion-link{font-size:11px;letter-spacing:0;padding-top:12px}
+.detail-card h3{font-size:20px;font-weight:700}
+.detail-card small{font-size:10px;letter-spacing:.025em}
+.detail-card p{font-size:14px;line-height:1.65;min-height:124px;padding:16px}
+.consultation-layout{gap:40px;align-items:center}
+.contact-copy h2{font-size:38px;font-weight:700;line-height:1.18;letter-spacing:-.025em;margin:12px 0}
+.contact-copy .ornamental-rule{width:160px;margin:16px 0}
+.contact-copy>p:not(.overline){font-size:15px;line-height:1.65;max-width:380px}
+.contact-phone{font-size:30px;font-weight:700;line-height:1.3;margin-top:22px}
+.contact-phone small{font-size:12px;line-height:1.4;letter-spacing:.02em;margin-bottom:6px}
+.form-heading{padding:16px 20px}
+.form-heading p{font-size:11px;line-height:1.4;letter-spacing:.035em}
+.form-heading h3{font-family:var(--font-body);font-size:23px;font-weight:800;line-height:1.25;letter-spacing:-.02em;margin-top:5px;color:var(--white)}
+.main-form-body{padding:20px}
+#contact-form{column-gap:12px}
+.faq-layout h2{font-size:27px;font-weight:700;line-height:1.25}
+.faq-list summary{font-size:14px;font-weight:700;padding-block:16px}
+.faq-list details p{font-size:14px;line-height:1.65}
+.mobile-bar a{font-size:13px;font-weight:800;letter-spacing:0}
+@media(min-width:821px) and (max-width:1050px){
+  .campaign-heading h1{font-size:49px}
+  .hero-side-title{font-size:12px;padding-left:12px}
+  .quick-form-heading h2{font-size:20px}
+  .hero-consultation .field label{font-size:11px}
+  .hero-consultation .field input,.hero-consultation .field select{font-size:13px;padding-inline:9px}
+  #quick-form{grid-template-columns:minmax(0,2fr) minmax(70px,1fr);column-gap:8px}
+  .gift-grid .price{font-size:24px}
+  .gift-grid .choose-gift{font-size:11px}
+}
+@media(max-width:820px){
+  .hero-layout{gap:24px;align-items:start;max-width:620px}
+  .campaign-heading h1{font-size:54px}
+  .hero-consultation{max-width:480px}
+  .consultation-layout{gap:24px}
+  .contact-copy h2{font-size:35px}
+  .contact-copy>p:not(.overline){max-width:540px}
+  .contact-phone{margin-top:16px}
+  .detail-card p{min-height:146px}
+}
+@media(max-width:560px){
+  .section{padding-block:36px}
+  .collection-section{padding-top:0}
+  .header-inner{gap:8px}
+  .brand{gap:10px}
+  .brand small{font-size:7.5px;max-width:177px}
+  .section-heading{margin-bottom:22px}
+  .section-heading h2{font-size:25px;line-height:1.24}
+  .section-heading .overline{font-size:10px}
+  .section-heading>p:last-child:not(.overline){font-size:14px}
+  .hero-layout{padding-block:24px 28px;gap:22px}
+  .campaign-heading{margin-bottom:18px}
+  .campaign-heading h1{font-size:clamp(33px,9.4vw,46px)}
+  .campaign-heading .overline{font-size:9px;letter-spacing:.015em}
+  .hero-side-title{font-size:10px;line-height:1.45;padding-left:10px}
+  .hero-side-title b{font-size:8px}
+  .hero-tagline{font-size:9px;margin-top:10px}
+  .feature-heading{padding:10px 5px}
+  .feature-heading>span{font-size:11px;min-height:30px}
+  .feature-heading small{font-size:11px}
+  .feature-footer{font-size:18px;padding:9px;min-height:61px}
+  .feature-sale{font-size:18px}
+  .quick-form-heading h2{font-size:24px}
+  .field input,.field select,.field textarea,.hero-consultation .field input,.hero-consultation .field select{font-size:16px}
+  .hero-consultation .field input::placeholder{font-size:14px}
+  .field label{font-size:13px}
+  .gold-strip strong{font-size:13px}
+  .gold-strip span{font-size:11px}
+  .gift-grid{gap:12px}
+  .gift-grid .gift-title{min-height:58px;padding:8px 4px}
+  .gift-grid .gift-title>span{font-size:8px}
+  .gift-grid .gift-title h3{font-size:19px;line-height:1.2;letter-spacing:-.025em}
+  .gift-grid .gift-content{padding:12px 10px}
+  .gift-grid .composition>span{font-size:9px}
+  .gift-grid .gift-contents{font-size:13px;line-height:1.55;min-height:61px}
+  .gift-grid .gift-purchase{margin-top:8px;padding-top:8px}
+  .gift-grid .price{font-size:23px}
+  .gift-grid .choose-gift{font-size:12px;min-height:44px}
+  .occasion-card h3{font-size:23px}
+  .detail-card h3{font-size:18px}
+  .detail-card p{font-size:13px;line-height:1.6;padding:13px;min-height:162px}
+  .contact-copy h2{font-size:32px}
+  .contact-copy .overline{font-size:10px}
+  .contact-copy>p:not(.overline){font-size:15px}
+  .main-form-body{padding:18px}
+  .form-heading{padding:16px}
+  .form-heading h3{font-size:22px}
+  .form-heading p{font-size:10px;letter-spacing:.02em}
+  .form-note,.hero-consultation .form-note{font-size:12px}
+}
+@media(max-width:359px){
+  .quick-form-heading h2{font-size:22px}
+  .gift-grid .gift-title>span,.gift-grid .composition>span{font-size:10px}
+  .gift-grid .gift-title h3{font-size:25px}
+  .gift-grid .gift-contents{font-size:14px;min-height:0}
+  .gift-grid .price{font-size:26px}
+  .gift-grid .gift-content{padding:14px 16px}
+  .contact-copy h2{font-size:29px}
+}
+
+/* Shared gift selection: one quantity per set, consistent in both forms. */
+#quick-form{grid-template-columns:repeat(2,minmax(0,1fr))}
+#quick-form>.field:has(input){grid-column:auto}
+.order-picker{min-width:0;margin:0 0 16px;padding:0;border:0}
+.order-picker legend{width:100%;padding:0;color:var(--ink);font-size:12px;line-height:1.4;font-weight:800;letter-spacing:.02em}
+.order-picker legend>span{color:var(--red)}
+.order-picker-hint{margin:5px 0 10px;color:var(--muted);font-size:12px;line-height:1.5}
+.order-items{display:grid;align-content:start;gap:10px;height:188px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--gold) transparent;scrollbar-gutter:stable;overflow-anchor:none;padding-right:3px}
+.order-item{display:grid;grid-template-columns:minmax(0,1fr) 76px 36px;align-items:end;gap:8px;min-width:0;padding:10px;border:1px solid #e4d3b5;border-radius:10px;background:#fff9ef}
+.order-picker .field,.hero-consultation .order-picker .field{margin:0;min-width:0;gap:5px}
+.order-picker .field label,.hero-consultation .order-picker .field label{font-size:12px;line-height:1.4;font-weight:700}
+.order-picker .field input,.order-picker .field select{min-height:44px;font-size:15px;background:var(--white);padding-inline:10px}
+.order-remove{display:flex;align-items:center;justify-content:center;min-width:36px;height:44px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--red)}
+.order-remove:hover{background:#ffe9e7}
+.order-remove:disabled{visibility:hidden}
+.order-remove .icon{width:17px;height:17px;stroke-width:2}
+.remove-text{display:none}
+.order-add{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;width:100%;margin-top:10px;padding:9px;border:1px dashed var(--gold);border-radius:9px;color:var(--red);background:var(--white);font-size:13px;font-weight:800}
+.order-add>span{font-size:22px;line-height:1;font-weight:500}
+.order-add:hover{background:#fff3dc;border-color:var(--red)}
+.order-add:disabled{opacity:.5;cursor:default}
+.order-total{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;align-content:center;gap:4px 10px;height:76px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.order-total-label{display:block;font-size:13px;font-weight:800;line-height:1.4}
+.order-item-count{display:block;color:var(--muted);font-size:11px;line-height:1.5;margin-top:3px}
+.order-total-value{font-size:22px;line-height:1.2;white-space:nowrap;color:var(--red);margin-left:auto}
+.order-estimate-note{font-size:11px;line-height:1.5;color:var(--muted);margin-top:6px}
+.order-selection-feedback{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.order-selection-feedback:empty{display:none}
+.order-item [aria-invalid=true]{border-color:var(--red)}
+.feature-prices{display:flex;flex-direction:column;justify-content:flex-end;gap:5px;min-height:54px}
+.feature-footer{min-height:76px;align-items:center}
+.feature-sale,.feature-footer>.feature-prices>.feature-sale{font-family:var(--font-body);font-weight:800;font-size:23px;line-height:1.2;letter-spacing:-.025em}
+.price,.ribbon-price strong,.order-total-value{font-family:var(--font-body);font-variant-numeric:lining-nums tabular-nums}
+.feature-sale,.original-price{font-variant-numeric:lining-nums tabular-nums}
+.brand-registered{display:inline-block;margin-left:.16em;font-family:var(--font-body);font-size:.37em;font-weight:700;vertical-align:super;line-height:0;letter-spacing:0}
+.campaign-heading h1{font-family:'Playfair Display',Georgia,serif;font-weight:700;line-height:1.04;letter-spacing:-.025em}
+.hero-heading-top{display:block;font-size:.88em}
+.hero-brand-name{display:block;font-size:1.14em;letter-spacing:-.035em;margin-top:5px}
+.hero-brand-name .brand-registered{font-size:.27em;vertical-align:top;line-height:1.2;margin-top:.2em;margin-left:.15em}
+.site-nav{gap:24px}
+.site-nav a{font-size:12px;font-weight:800;letter-spacing:.025em;line-height:1.4;white-space:nowrap}
+@media(min-width:821px) and (max-width:1050px){
+  .site-nav{gap:16px}
+  .site-nav a{font-size:11px;letter-spacing:.01em}
+  .brand small{font-size:7px}
+  .hero-consultation .order-item{grid-template-columns:minmax(0,1fr) 64px 32px;gap:6px;padding:8px}
+  .hero-consultation .order-picker .field input,.hero-consultation .order-picker .field select{font-size:13px;padding-inline:8px}
+}
+@media(max-width:820px){.site-nav{gap:0}.site-nav a{font-size:13px;letter-spacing:.02em}}
+@media(max-width:560px){
+  .order-item{grid-template-columns:minmax(0,1fr) 64px 32px;gap:6px;padding:9px}
+  .order-picker .field input,.order-picker .field select,.hero-consultation .order-picker .field input,.hero-consultation .order-picker .field select{font-size:16px;padding-inline:8px;min-height:44px}
+  .order-total-value{font-size:21px}
+  .feature-sale,.feature-footer>.feature-prices>.feature-sale{font-size:19px}
+  .feature-footer{min-height:70px}
+  .feature-prices{min-height:48px;gap:4px}
+  .feature-prices .original-price{font-size:11px}
+  .campaign-heading h1{font-size:clamp(32px,9.3vw,46px)}
+  .hero-brand-name{font-size:1.1em}
+  .brand>span>.brand-registered{font-size:.4em}
+}
+@media(max-width:359px){
+  #quick-form{grid-template-columns:minmax(0,1fr)}
+  .order-item{grid-template-columns:minmax(0,1fr) 66px}
+  .order-remove{grid-column:1/-1;width:100%;height:36px;gap:5px;font-size:12px;font-weight:700}
+  .order-remove:disabled{display:none}
+  .remove-text{display:inline}
+  .feature-sale,.feature-footer>.feature-prices>.feature-sale{font-size:17px}
+  .hero-brand-name{font-size:1.04em}
+  .brand small{font-size:7px;max-width:170px}
+}
+
+/* Selection changes stay inside the form; the campaign background stays still. */
+.order-picker{overflow-anchor:none}
+.order-estimate-note{height:33px;margin-bottom:0}
+.hero-consultation .form-actions .order-button .order-label{color:#f6d26d;-webkit-text-stroke:1.15px #fff;paint-order:stroke fill;text-shadow:0 2px 2px rgba(65,16,0,.35)}
+.hero-consultation .form-actions .order-button .icon{color:#f6d26d}
+@media(max-width:359px){
+  .order-items{height:228px}
+  .order-total-value{font-size:19px}
+}
+
+/* Verified company details and direct paths to the official channels. */
+.brand-information{border-top:1px solid var(--line);background:var(--cream)}
+.brand-information-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+.brand-information h2{margin:8px 0 14px;font-family:var(--font-display);font-size:30px;font-weight:700;line-height:1.22}
+.brand-information .company-intro{max-width:520px;font-size:14px;line-height:1.75;color:var(--ink)}
+.company-name{font-size:15px;font-weight:800;line-height:1.55;margin-top:18px}
+.company-details{margin:12px 0 0;display:grid;gap:8px;font-size:13px;line-height:1.65}
+.company-details>div{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px}
+.company-details dt{font-weight:700;color:var(--muted)}
+.company-details dd{margin:0;overflow-wrap:anywhere}
+.company-details a{color:var(--red);font-weight:700}
+.company-channels{display:grid;gap:12px}
+.channel-card{display:grid;grid-template-columns:44px minmax(0,1fr) 20px;align-items:center;gap:14px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--white);transition:border-color .2s,background .2s}
+.channel-card:hover{border-color:var(--red);background:#fff9ef}
+.channel-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:var(--red);color:var(--white)}
+.channel-icon .icon{width:23px;height:23px}
+.channel-card strong{display:block;color:var(--red);font-size:15px;font-weight:800;line-height:1.4}
+.channel-card small{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.5}
+.channel-card .channel-url{color:var(--gold-text);font-size:11px;margin-top:6px;overflow-wrap:anywhere}
+.company-policy-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:20px;font-size:12px;line-height:1.6}
+.company-policy-links a{text-decoration:underline;text-underline-offset:3px;color:var(--red)}
+.footer-links{display:grid;grid-template-columns:repeat(3,max-content);justify-content:center;gap:14px 20px}
+@media(max-width:820px){.footer-links{justify-content:start}}
+@media(max-width:359px){.footer-links{grid-template-columns:repeat(2,max-content)}}
+@media(max-width:820px){.brand-information-layout{grid-template-columns:1fr;gap:24px}.brand-information .company-intro{max-width:none}}
+@media(max-width:560px){.brand-information h2{font-size:26px}.channel-card{padding:15px;gap:11px;grid-template-columns:40px minmax(0,1fr) 18px}.channel-icon{width:40px;height:40px}.channel-card strong{font-size:14px}.company-details>div{grid-template-columns:65px minmax(0,1fr);gap:8px}}
+
+/* Alternating red and champagne gold across the six gift sets. */
+.gift-grid .gift-card--gold .gift-image-panel{background:linear-gradient(110deg,#e5ba5d 0%,#f4d581 52%,#ffe79c 100%)}
+.gift-grid .gift-card--gold .gift-title,.gift-grid .gift-card--gold .gift-title h3{color:var(--red)}
+.gift-grid .gift-card--gold .gift-title>span{color:#855608}
+.gift-grid .gift-card--gold .gift-title>span:before,.gift-grid .gift-card--gold .gift-title>span:after{background:#b17b1d}
+.gift-grid .gift-card--gold .photo-button{border-color:#fffaf0}
+#quick-form>.email-field:has(input){grid-column:1/-1}
+
+/* A short callback request opens first; gift selection remains in its own tab. */
+.lead-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding:5px;margin-bottom:18px;border:1px solid var(--line);border-radius:12px;background:#fff4de}
+.lead-tab{min-height:44px;padding:10px 8px;border:0;border-radius:8px;background:transparent;color:var(--red);font:800 13px/1.3 var(--font-body);cursor:pointer}
+.lead-tab[aria-selected=true]{background:var(--red);color:#fff;box-shadow:0 3px 8px rgba(100,6,11,.12)}
+.lead-tab:disabled{cursor:wait;opacity:.7}
+.lead-panel[hidden]{display:none!important}
+.lead-intro{margin-bottom:17px}
+.lead-intro h3{font:800 17px/1.35 var(--font-body);color:var(--red);margin:0 0 6px}
+.lead-intro p{font-size:13px;line-height:1.65;color:var(--muted);margin:0}
+#consultation-form .field{margin-bottom:14px}
+#consultation-form .form-actions{margin-top:7px}
+.hero-consultation .consultation-submit{min-height:52px;font-size:17px;font-weight:800;border-radius:11px;color:#fff}
+#consultation-form .order-label{animation:none}
+
+/* Burgundy and warm gold replace the vertical stripes. */
+.choice-section{background:radial-gradient(ellipse at 4% 0,rgba(246,210,109,.16),transparent 48%),radial-gradient(ellipse at 98% 100%,rgba(225,172,67,.13),transparent 48%),linear-gradient(115deg,#710b14,#a20b17 52%,#780c17);border-block:1px solid #d5aa59}
+.choice-section .overline{color:#f5d894}
+.choice-section .section-heading h2{color:#ffe8ad}
+.choice-section .section-heading>p:last-child{color:#f7e5ce}
+.choice-section .ornamental-rule{color:#f3d17e}
+.choice-section .ornamental-rule:before,.choice-section .ornamental-rule:after{background:#d4ae60}
+.choice-section .occasion-card{background:#fff9ed;border:1px solid #ead09b;box-shadow:0 12px 26px rgba(34,0,4,.16)}
+
+/* Collection invitation: one compact message and one clearly grouped offer. */
+.collection-section{padding-top:32px}
+.cta-ribbon{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.88fr);align-items:center;gap:clamp(24px,3vw,44px);margin-bottom:38px;padding:26px clamp(24px,3vw,36px);border:1px solid #d8b66b;border-left:5px solid var(--red);border-radius:16px;background:linear-gradient(112deg,#fff9ec 0%,#fff0ca 55%,#f8dfa3 100%);box-shadow:0 8px 24px rgba(109,65,7,.07)}
+.ribbon-copy{min-width:0;text-align:left}
+.ribbon-copy>span{display:block;color:#855b16;font-size:10px;font-weight:800;line-height:1.4;letter-spacing:.09em}
+.ribbon-copy h2{max-width:510px;margin:9px 0 0;color:var(--red);font-size:clamp(22px,2.3vw,27px);font-weight:700;line-height:1.22;letter-spacing:-.02em;text-wrap:balance}
+.ribbon-offer{display:flex;align-items:center;justify-content:space-between;gap:18px;min-width:0;min-height:80px;padding-left:clamp(20px,2.5vw,32px);border-left:1px solid #d6b66c}
+.ribbon-price{min-width:0;white-space:nowrap}
+.ribbon-price small{display:block;margin-bottom:4px;color:#855b16;font-size:10px;font-weight:800;line-height:1.35;letter-spacing:.07em}
+.ribbon-price strong{display:block;color:var(--red);font-family:var(--font-body);font-size:clamp(28px,2.6vw,34px);font-weight:800;line-height:1.12;letter-spacing:-.045em;font-variant-numeric:lining-nums tabular-nums}
+.ribbon-price strong span{font-size:.55em;letter-spacing:0}
+.ribbon-offer>.button{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;gap:11px;min-width:145px;min-height:52px;padding:12px 17px;border-radius:10px;color:var(--white);font-size:14px;font-weight:800;line-height:1.2;white-space:nowrap}
+@media(max-width:900px){
+  .cta-ribbon{grid-template-columns:minmax(0,1fr);gap:16px;padding:23px 26px}
+  .ribbon-copy h2{max-width:none}
+  .ribbon-offer{min-height:0;padding:15px 0 0;border-left:0;border-top:1px solid #d6b66c}
+}
+@media(max-width:560px){
+  .collection-section{padding-top:24px}
+  .cta-ribbon{gap:14px;margin-bottom:30px;padding:20px;border-radius:13px}
+  .ribbon-copy>span{font-size:9px}
+  .ribbon-copy h2{font-size:22px;line-height:1.25}
+  .ribbon-price strong{font-size:27px}
+  .ribbon-offer>.button{min-width:124px;min-height:46px;padding:9px 12px;font-size:12px}
+}
+@media(max-width:359px){
+  .ribbon-offer{flex-wrap:wrap;gap:12px}
+  .ribbon-offer>.button{width:100%}
+}
