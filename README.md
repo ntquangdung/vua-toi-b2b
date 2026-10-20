@@ -44,9 +44,9 @@ Bộ Phúc Lành 155.000 ₫ đã bỏ. Tỏi Lý Sơn – ớt xiêm rừng là
 
 ## Giao diện
 
-Phần đầu có khối đỏ, số +1000 màu vàng và dòng Khách hàng đã đặt hàng theo nội dung người dùng cung cấp. Tone đỏ, kem và vàng. Logo Vua Tỏi thật; tên thương hiệu có ®. Body và giá dùng Manrope, tiêu đề phụ Red Rose, tiêu đề chính Playfair Display; font tải local cùng giấy phép. Lưới sáu bộ quà: 3 cột desktop, 2 cột mobile từ 360px, 1 cột màn hình nhỏ hơn. Màu thẻ đỏ–vàng–đỏ và vàng–đỏ–vàng.
+Phần đầu canh giữa tiêu đề và khối +1000, ngăn bằng đường vàng và ngôi sao; dòng KHÁCH HÀNG ĐÃ ĐẶT HÀNG viết hoa. Bên dưới chia hai: ảnh An Khang thật kèm quy cách 2 hủ × 500g, và bảng CHƯƠNG TRÌNH KHUYẾN MÃI. Các mức giảm từ 30% đến 10% theo số lượng hiển thị theo ảnh người dùng cung cấp; tạm tính đặt hàng vẫn theo giá gốc và được nhân viên xác nhận. Tone đỏ, kem và vàng. Logo Vua Tỏi thật; tên thương hiệu có ®. Body và giá dùng Manrope, tiêu đề phụ Red Rose, tiêu đề chính Playfair Display; font tải local cùng giấy phép. Lưới sáu bộ quà: 3 cột desktop, 2 cột mobile từ 360px, 1 cột màn hình nhỏ hơn. Màu thẻ đỏ–vàng–đỏ và vàng–đỏ–vàng.
 
-Tab TƯ VẤN mở mặc định; tab ĐẶT HÀNG giữ lựa chọn nhiều loại. Tabs hỗ trợ bàn phím. Nút ĐẶT HÀNG chữ vàng kim viền trắng trên đỏ có animation nhẹ; hỗ trợ prefers-reduced-motion. Danh sách quà có chiều cao cố định và cuộn bên trong. Mục Chọn quà theo thành phần đã bỏ; dải mời đặt hàng có khoảng cách trước/sau để cân đối.
+Tab TƯ VẤN mở mặc định; tab ĐẶT HÀNG giữ lựa chọn nhiều loại. Tabs hỗ trợ bàn phím. TƯ VẤN có hiệu ứng nhấn chữ và quét sáng nhẹ; nút ĐẶT HÀNG chữ vàng kim viền trắng trên đỏ có animation nhẹ. Các hiệu ứng hỗ trợ prefers-reduced-motion. Danh sách quà có chiều cao cố định và cuộn bên trong. Mục Chọn quà theo thành phần đã bỏ; dải mời đặt hàng có khoảng cách trước/sau để cân đối.
 
 Hotline 0935 176 188; email cungung@vuatoi.com.vn; liên kết thương hiệu vuatoi.com.vn và facebook.com/vuatoidacsanlyson. Cách viết hủ theo yêu cầu; không hiển thị mã số thuế.
 

@@ -1226,3 +1226,120 @@ body{line-height:1.65}
   .hero-social-proof strong{font-size:25px}
   .hero-social-proof span{font-size:10px}
 }
+
+/* Approved centered hero, promotion and consultation emphasis. */
+.campaign-heading{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);column-gap:22px;align-items:center}
+.campaign-heading .overline{margin-bottom:19px;text-align:center}
+.campaign-heading h1{grid-column:1;justify-self:center;text-align:center}
+.campaign-heading .hero-tagline{margin-top:19px;text-align:center}
+.campaign-heading .ornamental-rule{margin-top:17px}
+.hero-separator{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;gap:10px;height:126px;color:#bc8b36}
+.hero-separator:before,.hero-separator:after{content:"";display:block;width:1px;flex:1;background:linear-gradient(to bottom,transparent,#c99d48)}
+.hero-separator:after{background:linear-gradient(to bottom,#c99d48,transparent)}
+.hero-separator svg{display:block;width:18px;height:18px;flex:none;fill:currentColor}
+.hero-social-proof{grid-column:3;justify-self:center;align-items:center;justify-content:center;gap:11px;width:100%;max-width:236px;min-height:156px;padding:22px 15px;text-align:center;border:1px solid #d7b45c;border-radius:13px;background:linear-gradient(145deg,#bd0b12,#a7050c);box-shadow:0 5px 0 #e8cf91}
+.hero-social-proof strong{font-size:50px;font-weight:800;line-height:1;letter-spacing:-.045em;color:#ffe49d}
+.hero-social-proof span{font-size:14px;font-weight:800;line-height:1.55;letter-spacing:.015em;color:#fff8ec}
+@media(max-width:600px){
+  .campaign-heading{grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);column-gap:10px}
+  .campaign-heading .overline{margin-bottom:18px}
+  .campaign-heading h1{font-size:clamp(27px,8vw,40px)}
+  .campaign-heading .hero-tagline{margin-top:18px;font-size:9px;letter-spacing:0}
+  .hero-separator{height:96px;gap:7px}
+  .hero-separator svg{width:14px;height:14px}
+  .hero-social-proof{gap:9px;min-height:122px;padding:16px 9px;border-radius:11px;box-shadow:0 4px 0 #e8cf91}
+  .hero-social-proof strong{font-size:36px}
+  .hero-social-proof span{font-size:11px;line-height:1.5;letter-spacing:0}
+}
+@media(max-width:359px){
+  .campaign-heading{column-gap:7px;grid-template-columns:minmax(0,1fr) 12px minmax(0,1fr)}
+  .hero-separator{height:88px}
+  .hero-separator svg{width:12px;height:12px}
+  .hero-social-proof{min-height:110px;padding-inline:6px}
+  .hero-social-proof strong{font-size:29px}
+  .hero-social-proof span{font-size:9px}
+}
+
+/* Hero split: real An Khang photo + editable quantity-discount graphic. */
+.hero-feature-grid{align-items:stretch}
+.hero-feature-grid>.hero-feature{display:flex;flex-direction:column}
+.hero-feature-grid>.hero-feature .feature-footer{margin-top:auto}
+.hero-discount{position:relative;display:flex;flex-direction:column;overflow:hidden;min-width:0;padding:17px 18px 12px;border:1.5px solid #cfa34e;border-radius:14px;background:radial-gradient(ellipse at 100% 0,#fff9df,transparent 65%),linear-gradient(145deg,#fff2ca,#f1d287);box-shadow:inset 0 0 0 4px rgba(255,255,255,.3);color:#ad080e}
+.discount-heading{text-align:center;padding-bottom:10px;border-bottom:1px solid rgba(159,99,19,.27)}
+.discount-heading>p{font-size:12px;font-weight:800;line-height:1.4;letter-spacing:.035em;color:#754511}
+.discount-heading h2{margin-top:4px;font-family:"Red Rose",Georgia,serif;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.025em;color:#99030b}
+.discount-tiers{display:flex;flex:1;flex-direction:column;justify-content:space-evenly;margin:5px 0 0}
+.discount-tiers>div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:34px;padding:4px 8px;border-bottom:1px solid rgba(169,118,39,.2)}
+.discount-tiers dt{white-space:nowrap;font-size:14px;font-weight:600;line-height:1.4;color:#603815}
+.discount-tiers dd{margin:0;flex:none;white-space:nowrap;font-size:24px;font-weight:800;line-height:1.15;letter-spacing:-.04em;font-variant-numeric:lining-nums tabular-nums}
+.discount-tiers dd span{font-size:.65em;margin-left:2px}
+.discount-tiers>.discount-tier-best{margin-top:4px;border:0;border-radius:7px;background:#ab0710;color:#ffe3a1}
+.discount-tier-best dt{color:#fff3d8;font-weight:700}
+.discount-note{margin-top:9px;text-align:center;font-size:11px;font-weight:600;line-height:1.4;color:#805317}
+/* A brief gold emphasis and light sweep draw attention to consultation. */
+.consultation-emphasis{display:inline-block;transform-origin:center}
+#tab-consultation[aria-selected=true] .consultation-emphasis,#consultation-form .consultation-submit .order-label{animation:consultation-emphasis 2.8s ease-in-out infinite;will-change:transform}
+.hero-consultation .consultation-submit{position:relative;isolation:isolate;overflow:hidden}
+.consultation-submit .order-label,.consultation-submit .icon{position:relative;z-index:1}
+.consultation-submit:before{content:"";position:absolute;inset:-40% auto -40% -60%;width:35%;background:linear-gradient(90deg,transparent,rgba(255,233,175,.42),transparent);transform:skewX(-20deg);animation:consultation-sweep 3.6s ease-in-out infinite;pointer-events:none}
+@keyframes consultation-emphasis{0%,55%,100%{transform:scale(1);color:#fff;text-shadow:none}18%,32%{transform:scale(1.065);color:#ffe49d;text-shadow:0 0 12px rgba(255,221,142,.2)}}
+@keyframes consultation-sweep{0%,42%{left:-60%;opacity:0}49%{opacity:1}74%,100%{left:140%;opacity:0}}
+@media(max-width:600px){
+  .hero-discount{padding:12px 10px 10px;border-radius:13px}
+  .discount-heading{padding-bottom:8px}
+  .discount-heading>p{font-size:10px;letter-spacing:.01em}
+  .discount-heading h2{font-size:18px;margin-top:4px}
+  .discount-tiers{margin-top:4px}
+  .discount-tiers>div{min-height:27px;padding:3px 5px;gap:4px}
+  .discount-tiers dt{font-size:11px}
+  .discount-tiers dd{font-size:20px}
+  .discount-note{font-size:9.5px;margin-top:8px}
+}
+@media(max-width:359px){
+  .hero-discount{padding-inline:7px}
+  .discount-heading h2{font-size:15px}
+  .discount-tiers dt{font-size:9px}
+  .discount-tiers dd{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  #tab-consultation[aria-selected=true] .consultation-emphasis,#consultation-form .consultation-submit .order-label,.consultation-submit:before{animation:none;will-change:auto}
+  .consultation-submit:before{display:none}
+}
+
+/* Verified set contents fill the space between the real photo and price. */
+.an-khang-details{display:flex;flex:1;flex-direction:column;justify-content:center;gap:8px;padding:13px 14px 12px}
+.gift-spec{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.gift-spec>span{font-size:10px;font-weight:800;line-height:1.4;letter-spacing:.035em;color:#8b5b25}
+.gift-spec>strong{font-size:16px;font-weight:800;line-height:1.35;letter-spacing:-.02em;color:#ac080e;white-space:nowrap}
+.gift-packaging{display:flex;align-items:center;gap:7px;padding-top:8px;border-top:1px solid #ead8b8;color:#6d4c2b;font-size:12px;font-weight:600;line-height:1.4}
+.gift-packaging .icon{flex:none;width:15px;height:15px;stroke:#b47d2a}
+@media(max-width:600px){
+  .an-khang-details{gap:7px;padding:10px 10px 9px}
+  .gift-spec{flex-direction:column;align-items:flex-start;gap:3px}
+  .gift-spec>span{font-size:8.5px}
+  .gift-spec>strong{font-size:14px}
+  .gift-packaging{gap:5px;padding-top:7px;font-size:10.5px}
+  .gift-packaging .icon{width:13px;height:13px}
+}
+@media(max-width:359px){
+  .an-khang-details{padding-inline:8px}
+  .gift-spec>strong{font-size:13px}
+  .gift-packaging{font-size:9px}
+}
+
+/* Promotion wording and descending offers. */
+.discount-tiers>.discount-tier-best{margin:0 0 4px}
+.discount-tiers dd small{font-size:10px;font-weight:700;letter-spacing:0;margin-right:3px;color:#805317}
+.discount-tier-best dd small{color:#fff3d8}
+@media(max-width:600px){
+  .discount-tiers>div{padding-inline:4px;gap:3px}
+  .discount-tiers dt{font-size:10px}
+  .discount-tiers dd{font-size:18px}
+  .discount-tiers dd small{font-size:8px;margin-right:1px}
+}
+@media(max-width:359px){
+  .discount-tiers>div{padding-inline:3px;gap:2px}
+  .discount-tiers dt{font-size:9px}
+  .discount-tiers dd{font-size:16px}
+  .discount-tiers dd small{font-size:7px;margin-right:0}
+}

@@ -32,7 +32,7 @@ Dự án hiện dùng **Direct Upload**. Push GitHub lưu mã nguồn, không t�
 3. Pages → vua-toi-b2b → Create deployment → Production → tải ZIP → Save and deploy.
 4. Mở website công khai và kiểm tra thay đổi.
 
-Gói gần nhất: deployment/vua-toi-cloudflare-pages.zip (1.315.393 byte). Build chỉ đưa HTML/CSS/JS, tài sản dùng trên trang, giấy phép font và _headers vào dist; mã nhận đơn, tests và tài liệu nội bộ nằm ngoài thư mục công khai.
+Gói gần nhất: deployment/vua-toi-cloudflare-pages.zip (1.317.316 byte). Build chỉ đưa HTML/CSS/JS, tài sản dùng trên trang, giấy phép font và _headers vào dist; bản nháp, mã nhận đơn, tests và tài liệu nội bộ nằm ngoài thư mục công khai.
 
 Direct Upload và Git integration là hai loại project khác nhau; muốn CI từ GitHub sau này cần tạo project dùng Git integration. https://developers.cloudflare.com/pages/get-started/direct-upload/
 
@@ -65,3 +65,13 @@ Không có deployment Vercel. Người dùng đã chuyển sang Cloudflare sau k
 - Đồng bộ card, hero, dialog, gift-catalog và máy chủ. Các giá lịch sử giữ nguyên.
 - Apps Script phiên bản 6, 08:53 20/10/2026; Production Cloudflare báo Success.
 - Đơn thử từ b2b.vuatoi.com.vn ghi hàng 8: An Khang × 1 + Phúc Lộc × 2 = 1.828.000 ₫; đã đối chiếu đơn giá, thành tiền và tổng trong Sheet. Tên KIỂM THỬ GIÁ 20-10 – KHÔNG XỬ LÝ; không xử lý như đơn khách.
+
+## Phát hành bản thiết kế đã duyệt — 20/10/2026
+
+- Áp dụng bản nháp hero-divider: tiêu đề cân giữa, dấu ngăn vàng, +1000 và dòng khách hàng viết hoa.
+- Hero chia ảnh An Khang và bảng CHƯƠNG TRÌNH KHUYẾN MÃI; thêm quy cách, hộp và túi đồng bộ. Bảng xếp mức giảm 30%, 25%, 20%, 15%, 10% theo số lượng; bỏ headline “GIẢM ĐẾN 30%”.
+- Thêm hiệu ứng TƯ VẤN, có hỗ trợ giảm chuyển động. Giữ scripts nhận đơn của bản chính; không đưa cấu hình demo hoặc đường dẫn bản nháp lên hosting.
+- Cloudflare nhận đủ 22 file và báo Success. Đã xác nhận nội dung mới, CSS v25 trên https://b2b.vuatoi.com.vn/.
+- Kiểm tra desktop 1280px và mobile 390px: hai thẻ hero cao bằng nhau, không tràn ngang; console không có lỗi. Form tư vấn và đặt hàng được bật; thử chọn An Khang × 1 + Phúc Lộc × 2 hiển thị 1.828.000 ₫ mà không gửi đơn mới.
+- 12 kiểm thử frontend và 35 kiểm thử máy chủ đạt. Apps Script và dữ liệu Sheet giữ nguyên; bảng khuyến mãi là thông tin để nhân viên xác nhận, chưa tự trừ vào tạm tính.
+- Ảnh kiểm tra lưu tại deployment/published-desktop.png và deployment/published-mobile.png; thư mục deployment không đưa lên GitHub hoặc hosting.
