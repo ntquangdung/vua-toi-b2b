@@ -1,13 +1,13 @@
 # Nhận tư vấn và đặt hàng Vua Tỏi bằng Google Sheets
 
-## Trạng thái ngày 16/10/2026
+## Trạng thái ngày 20/10/2026
 
-- Apps Script: **Vua Tỏi – Nhận đơn landing page**, phiên bản **5** lúc 14:35.
+- Apps Script: **Vua Tỏi – Nhận đơn landing page**, phiên bản **6** lúc 08:53 ngày 20/10/2026.
 - Chủ sở hữu/thực thi: cmavuatoilyson@gmail.com.
 - Dự án: https://script.google.com/u/0/home/projects/1NYc4tDjKCif-zE1wJUCgxg0TMixB07jB8BEbrJ1hYfZQcFh6SwHiu_Z7/edit
 - Sheet riêng tư: https://docs.google.com/spreadsheets/d/1_BCtHhRPrdNBLz2Kwg6ONd2tHVlE_FKMiotHNEw7QCo/edit?gid=1147376088#gid=1147376088, tab DonHang.
 - Web App /exec đã đặt trong site-config.js. Quyền Bất kỳ ai cho phép khách gửi yêu cầu; không cấp quyền xem Sheet.
-- Đã xác nhận gửi thực tế từ https://vua-toi-b2b.pages.dev/, cả tư vấn và đặt hàng. b2b.vuatoi.com.vn đang chờ DNS.
+- Đã xác nhận gửi thực tế từ https://vua-toi-b2b.pages.dev/, cả tư vấn và đặt hàng. Ngày 20/10/2026 đã gửi đơn thành công từ https://b2b.vuatoi.com.vn/.
 
 ## Cấu hình
 
@@ -76,7 +76,7 @@ Tư vấn:
 
 Tên 2–80 ký tự; điện thoại 9–15 chữ số; email trống hoặc đúng định dạng tối đa 254 ký tự; lời nhắn tối đa 600 ký tự. Mỗi đơn có 1–6 loại, mỗi loại 1–10.000 bộ, không trùng loại. source đặt hàng là quick-form hoặc contact-form. Không gửi giá/tổng tiền từ trình duyệt. Request ID dùng chữ ASCII, số, dấu gạch ngang/gạch dưới, dài 16–80 ký tự.
 
-Sáu tên sản phẩm: Hộp quà An Khang, Hộp quà Phúc Thọ, Hộp quà Thịnh Vượng, Hộp quà Phúc An, Hộp quà Trường Thọ, Hộp quà Phúc Lộc. Giá máy chủ lần lượt 659000, 639000, 399000, 655000, 399000, 389000. Đơn giá/tiền từng dòng lưu tại thời điểm đặt; tổng chỉ gồm tiền hàng. Giá/giao nhận do nhân viên xác nhận.
+Sáu tên sản phẩm: Hộp quà An Khang, Hộp quà Phúc Thọ, Hộp quà Thịnh Vượng, Hộp quà Phúc An, Hộp quà Trường Thọ, Hộp quà Phúc Lộc. Giá máy chủ lần lượt 936000, 720000, 399000, 828000, 554000, 446000. Đơn giá/tiền từng dòng lưu tại thời điểm đặt; tổng chỉ gồm tiền hàng. Giá/giao nhận do nhân viên xác nhận.
 
 Để tương thích việc gửi lại từ tab web phiên bản cũ, API vẫn chấp nhận khóa occasion hợp lệ của giao thức cũ khi tính dấu vân tay; không lưu cột này. Website hiện không gửi khóa đó. Các yêu cầu tư vấn không nhận items, occasion, notes hoặc giá.
 
@@ -94,7 +94,7 @@ Range.setValues: https://developers.google.com/apps-script/reference/spreadsheet
 
 ## Kiểm thử
 
-Chạy npm test từ gốc dự án: 12 frontend và 34 Apps Script checks bằng mock. Các ca mới kiểm tra cột đổi thứ tự, cột nhân viên, gửi lại, giá theo tên cột, bỏ Dịp tặng và từ chối tiêu đề thiếu/trùng.
+Chạy npm test từ gốc dự án: 12 frontend và 35 Apps Script checks bằng mock. Các ca mới kiểm tra cột đổi thứ tự, cột nhân viên, gửi lại, giá theo tên cột, bỏ Dịp tặng và từ chối tiêu đề thiếu/trùng.
 
 Đã đối chiếu trực tiếp bản Cloudflare:
 
@@ -103,4 +103,10 @@ Chạy npm test từ gốc dự án: 12 frontend và 34 Apps Script checks bằn
 - Hai yêu cầu đều dùng điện thoại thử 0000000000, frontend nhận ACK thành công. Không xử lý các dòng này như đơn khách. Vị trí hàng chỉ là bản ghi kiểm tra ngày 16/10/2026, có thể đổi khi nhân viên sắp xếp bảng.
 - Sheet vẫn hiện chỉ riêng tư với chủ sở hữu. Không thay đổi ACL trong lần triển khai này.
 
-Sau khi DNS b2b.vuatoi.com.vn có hiệu lực, kiểm tra lại biểu mẫu từ địa chỉ đó. ALLOWED_ORIGINS đã chuẩn bị chính xác origin; không khẳng định luồng tên miền riêng thành công trước kiểm tra thực tế.
+Đã xác nhận biểu mẫu tại https://b2b.vuatoi.com.vn/ ngày 20/10/2026. ALLOWED_ORIGINS giữ nguyên bốn địa chỉ như cấu hình ở trên.
+
+## Giá cập nhật 20/10/2026
+
+Dùng một giá theo cột GIÁ GỐC của ảnh bảng ngày 18/10. Website, catalog picker và VUA_TOI_UNIT_PRICES_ đã đồng bộ; giá đã lưu của đơn cũ giữ nguyên. Không tự tính chiết khấu theo số lượng hoặc thêm giá khuyến mãi. Một ca kiểm thử đối chiếu cả sáu giá hiển thị, catalog và máy chủ.
+
+Đơn thử giá mới ngày 20/10 ở hàng 8: An Khang × 1, Phúc Lộc × 2; K8 có đơn giá 936.000/446.000; L8 có thành tiền 936.000/892.000; M8 lưu số 1828000. Frontend nhận ACK đã lưu. Dòng thử ghi rõ KHÔNG XỬ LÝ, không xử lý như đơn khách.

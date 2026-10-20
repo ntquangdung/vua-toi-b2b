@@ -473,8 +473,22 @@ check('migration never replaces an occupied extra column', () => {
   assert.equal(state.rows.length,2);
 });
 
+check('displayed prices and picker match the owner price sheet and server catalogue', () => {
+  const html=fs.readFileSync(path.join(__dirname,'../../index.html'),'utf8');
+  const catalog=JSON.parse(html.match(/<script type="application\/json" id="gift-catalog">([\s\S]*?)<\/script>/)[1]);
+  const expected=[936000,720000,399000,828000,554000,446000];
+  const {context}=fixture();
+  assert.deepEqual(catalog.map(item=>item.price),expected);
+  assert.ok(!/<del|GIÁ KHUYẾN MẠI|Giá khuyến mại/.test(html));
+  catalog.forEach((item,index)=>{
+    assert.equal(context.pricingFor_([{product:item.product,quantity:1}]).total,expected[index]);
+    const article=html.match(new RegExp('<article[^>]+id="'+item.id+'"[\\s\\S]*?</article>'))[0];
+    assert.ok(article.includes('Giá bộ quà '+context.money_(expected[index])));
+  });
+});
+
 check('unit prices and order totals come from the server catalogue for every set', () => {
-  const sellingPrices=[659000,639000,399000,655000,399000,389000];
+  const sellingPrices=[936000,720000,399000,828000,554000,446000];
   ['An Khang','Phúc Thọ','Thịnh Vượng','Phúc An','Trường Thọ','Phúc Lộc'].forEach((name,index)=>{
     const {state,context}=fixture();
     const product='Hộp quà '+name;
@@ -487,8 +501,8 @@ check('unit prices and order totals come from the server catalogue for every set
   const {state,context}=fixture();
   const items=[{product:'Hộp quà An Khang',quantity:2},{product:'Hộp quà Phúc An',quantity:3}];
   assert.equal(context.saveOrder(order({items}),origin).saved,true);
-  assert.equal(state.rows[1][12],'Hộp quà An Khang × 2: 1.318.000 ₫\nHộp quà Phúc An × 3: 1.965.000 ₫');
-  assert.equal(state.rows[1][13],3283000);
+  assert.equal(state.rows[1][12],'Hộp quà An Khang × 2: 1.872.000 ₫\nHộp quà Phúc An × 3: 2.484.000 ₫');
+  assert.equal(state.rows[1][13],4356000);
   assert.equal(context.saveOrder(order({requestId:'request-price-forged',price:1}),origin).error.code,'INVALID_REQUEST');
 });
 
@@ -501,7 +515,7 @@ check('12-column orders are backfilled once without changing customer details or
   assert.equal(state.rows[0][11],'Đơn giá từng bộ (VNĐ)');
   assert.equal(state.rows[0][13],'Tổng tiền hàng (VNĐ)');
   assert.deepEqual(legacyRow(state.rows[1],12),previousRow);
-  assert.equal(state.rows[1][13],1318000);
+  assert.equal(state.rows[1][13],1872000);
   // A historical price remains valid when the current catalogue differs.
   state.rows[1][11]='Hộp quà An Khang: 650.000 ₫';
   state.rows[1][12]='Hộp quà An Khang × 2: 1.300.000 ₫';
@@ -512,7 +526,7 @@ check('12-column orders are backfilled once without changing customer details or
 });
 
 check('price readback rejects an incorrect subtotal, text total, or inconsistent snapshot', () => {
-  for(const [column,value] of [[12,'Wrong subtotal'],[13,'1318000'],[13,1],[11,'Hộp quà An Khang: 1 ₫']]){
+  for(const [column,value] of [[12,'Wrong subtotal'],[13,'1872000'],[13,1],[11,'Hộp quà An Khang: 1 ₫']]){
     const {state,context}=fixture();
     assert.equal(context.saveOrder(order(),origin).saved,true);
     state.rows[1][column]=value;
@@ -619,8 +633,8 @@ check('staff column order is preserved while orders, leads and retries use heade
   assert.equal(value(2,'Loại yêu cầu'),'Tư vấn');
   assert.equal(value(2,'Email'),'qa-lead@example.invalid');
   assert.equal(value(2,'Tổng tiền hàng (VNĐ)'),'');
-  assert.equal(value(3,'Tổng tiền hàng (VNĐ)'),1437000);
-  assert.equal(value(3,'Thành tiền từng bộ (VNĐ)'),'Hộp quà An Khang × 1: 659.000 ₫\nHộp quà Phúc Lộc × 2: 778.000 ₫');
+  assert.equal(value(3,'Tổng tiền hàng (VNĐ)'),1828000);
+  assert.equal(value(3,'Thành tiền từng bộ (VNĐ)'),'Hộp quà An Khang × 1: 936.000 ₫\nHộp quà Phúc Lộc × 2: 892.000 ₫');
   assert.deepEqual([...state.hiddenColumns].sort((a,b)=>a-b),[2,10]);
   assert.equal(state.moves.length,0);
 });
@@ -648,8 +662,8 @@ check('reordered empty prices and type are backfilled by name without replacing 
     state.rows[1][state.rows[0].indexOf(name)]='';
   assert.equal(context.saveOrder(order(),origin).saved,true);
   assert.equal(state.rows[1][8],'Đặt hàng');
-  assert.equal(state.rows[1][10],'Hộp quà An Khang: 659.000 ₫');
-  assert.equal(state.rows[1][12],1318000);
+  assert.equal(state.rows[1][10],'Hộp quà An Khang: 936.000 ₫');
+  assert.equal(state.rows[1][12],1872000);
 });
 
 check('duplicate or renamed system headers fail without changing data or column order', () => {

@@ -20,11 +20,11 @@ const VUA_TOI_PRODUCTS_ = Object.freeze([
 const VUA_TOI_OCCASIONS_ = Object.freeze([
   'Biếu người thân', 'Tặng khách hàng', 'Tặng đối tác', 'Khác', 'Cần tư vấn'
 ]);
-// Current selling prices from the supplied gift collection, never from the browser.
+// Single displayed prices from the owner-supplied 18/10 price sheet, updated 20/10/2026.
 const VUA_TOI_UNIT_PRICES_ = Object.freeze({
-  'Hộp quà An Khang':659000, 'Hộp quà Phúc Thọ':639000,
-  'Hộp quà Thịnh Vượng':399000, 'Hộp quà Phúc An':655000,
-  'Hộp quà Trường Thọ':399000, 'Hộp quà Phúc Lộc':389000
+  'Hộp quà An Khang':936000, 'Hộp quà Phúc Thọ':720000,
+  'Hộp quà Thịnh Vượng':399000, 'Hộp quà Phúc An':828000,
+  'Hộp quà Trường Thọ':554000, 'Hộp quà Phúc Lộc':446000
 });
 
 /** Serve only a bridge. Customer data is never accepted through the URL. */
